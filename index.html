@@ -14,165 +14,81 @@
             --button-color: var(--tg-theme-button-color, #248b91);
             --button-text: var(--tg-theme-button-text-color, #ffffff);
         }
-        body { font-family: -apple-system, sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; }
-        #app { padding: 15px; padding-bottom: 120px; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; overflow-x: hidden; }
+        #app { padding: 15px; padding-bottom: 100px; }
         .category-title { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; color: var(--button-color); margin: 25px 0 12px; border-left: 5px solid var(--button-color); padding-left: 10px; }
-        .item-card { background: var(--secondary-bg); border-radius: 16px; padding: 14px; margin-bottom: 12px; }
+        .item-card { background: var(--secondary-bg); border-radius: 16px; padding: 14px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.05); }
         .item-header { display: flex; justify-content: space-between; align-items: flex-start; }
         .item-name { font-size: 1rem; font-weight: 700; flex: 1; }
-        .item-price { font-weight: 800; color: var(--button-color); margin-left: 10px; white-space: nowrap; }
+        .item-price { font-weight: 800; color: var(--button-color); margin-left: 10px; }
         .item-desc { font-size: 0.8rem; color: var(--hint-color); margin: 6px 0 12px; line-height: 1.2; }
-        .weight { font-size: 0.75rem; opacity: 0.7; font-weight: normal; }
-        .controls { display: flex; justify-content: flex-end; align-items: center; }
-        .btn-qty { background: var(--button-color); color: var(--button-text); border: none; border-radius: 8px; width: 34px; height: 34px; font-weight: bold; font-size: 1.2rem; cursor: pointer; }
-        .qty-num { margin: 0 12px; font-weight: 700; }
+        .controls { display: flex; justify-content: flex-end; align-items: center; margin-top: 10px; }
+        .qty-box { display: flex; align-items: center; background: var(--bg-color); border-radius: 10px; padding: 2px; }
+        .btn-qty { background: var(--button-color); color: var(--button-text); border: none; border-radius: 8px; width: 36px; height: 36px; font-weight: bold; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .qty-num { margin: 0 15px; font-weight: 700; font-size: 1.1rem; min-width: 20px; text-align: center; }
         .addon-section { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(0,0,0,0.1); }
         .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .addon-item { display: flex; align-items: center; font-size: 0.8rem; background: var(--bg-color); padding: 6px; border-radius: 8px; }
-        textarea { width: 100%; margin-top: 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); padding: 8px; font-size: 0.8rem; background: var(--bg-color); color: var(--text-color); box-sizing: border-box; }
+        .addon-item { display: flex; align-items: center; font-size: 0.8rem; background: var(--bg-color); padding: 8px; border-radius: 8px; }
+        .addon-item input { margin-right: 8px; width: 18px; height: 18px; }
+        textarea { width: 100%; margin-top: 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); padding: 10px; font-size: 0.85rem; background: var(--bg-color); color: var(--text-color); box-sizing: border-box; resize: none; }
     </style>
 </head>
 <body>
-    <div id="app"><div id="menu-content"></div></div>
+    <div id="app">
+        <div id="menu-content"></div>
+    </div>
+
 <script>
     const tg = window.Telegram.WebApp;
-    tg.ready(); tg.expand();
+    tg.ready();
+    tg.expand();
 
     const menuData = [
         {
             category: "🌯 Шаурма",
             items: [
-                { id: "sh_kur_st", name: "Шаурма курица (Стандарт)", price: 290, weight: "390г", desc: "Курица, капуста, морковь по-корейски, огурец, томат, лук, соус красный, соус белый" },
-                { id: "sh_kur_big", name: "Шаурма курица (Большая)", price: 350, weight: "500г", desc: "Увеличенная порция" },
-                { id: "sh_svin_st", name: "Шаурма свинина (Стандарт)", price: 320, weight: "390г", desc: "Свинина, капуста, морковь по-корейски, огурец маринованный, томат, лук, соус красный, соус белый" },
-                { id: "sh_svin_big", name: "Шаурма свинина (Большая)", price: 390, weight: "500г", desc: "Увеличенная порция" },
-                { id: "sh_skum", name: "Шаурма скумбрия", price: 340, weight: "355г", desc: "Скумбрия запеченная, лист салата, огурец, томат, лук, соус терияки, соус белый" },
-                { id: "sh_hab", name: "🌟 Шаурма ХАБ", price: 390, weight: "330г", desc: "Курица, запеченные овощи на мангале (баклажан, томат, болгарский перец), лук, соус аджика, соус фета" }
+                { id: "sh_kur_st", name: "Шаурма курица (Стандарт)", price: 290, desc: "390г. Овощи, соусы, корейская морковь" },
+                { id: "sh_kur_big", name: "Шаурма курица (Большая)", price: 350, desc: "500г. Увеличенная порция" },
+                { id: "sh_svin_st", name: "Шаурма свинина (Стандарт)", price: 320, desc: "390г. Овощи, соусы, маринованный лук" },
+                { id: "sh_svin_big", name: "Шаурма свинина (Большая)", price: 390, desc: "500г. Увеличенная порция" },
+                { id: "sh_skum", name: "Шаурма скумбрия", price: 340, desc: "355г. Скумбрия запеченная, терияки" },
+                { id: "sh_hab", name: "🌟 Шаурма ХАБ", price: 390, desc: "330г. Овощи гриль, аджика, соус фета" }
             ]
         },
         {
             category: "🍔 Бургеры",
             items: [
-                { id: "br_tiftik", name: "Тифтик бургер (рваная говядина)", price: 570, weight: "280г", desc: "Говядина с овощами, лист салата, огурец маринованный, моцарелла, соус макси-бургер" },
-                { id: "br_black", name: "Бургер Блэк", price: 460, weight: "315г", desc: "Котлета свино-говяжья, лист салата, томат, огурец, лук красный, сыр, соус бургерный" },
-                { id: "br_chef", name: "Шеф Бургер говядина", price: 470, weight: "320г", desc: "Котлета говяжья, сыр, томат, огурец маринованный, лук, лист салата, соус сырный" },
-                { id: "br_ananas", name: "Бургер Ананас", price: 520, weight: "380г", desc: "Котлета говяжья, томат, лист салата, ананас, майонез, кетчуп" },
-                { id: "br_chkalov", name: "Бургер Чкаловский", price: 540, weight: "400г", desc: "Бедро курицы в панировке, томат, лист салата, сыр, соус карри, майонез" },
-                { id: "br_fish", name: "Фиш бургер", price: 340, weight: "205г", desc: "Рыбная котлета, лист салата, огурец маринованный, сыр, соус тартар" },
-                { id: "br_chiken", name: "Чикен гриббургер", price: 360, weight: "170г", desc: "Котлета куриная, жюльен, лист салата, томат, огурец свежий, сыр" }
-            ]
-        },
-        {
-            category: "🥪 Сэндвичи и Роллы",
-            items: [
-                { id: "snd_ind", name: "Сэндвич индейка", price: 270, weight: "230г", desc: "Ветчина из индейки, огурец, томат, лист салата, соус коктейльный" },
-                { id: "snd_kur", name: "Сэндвич курица", price: 270, weight: "245г", desc: "Курица копченая, огурец, томат, лист салата, соус цезарь" },
-                { id: "snd_los", name: "Сэндвич лосось", price: 320, weight: "200г", desc: "Лосось с/с, огурец, лист салата, сливочный сыр" },
-                { id: "tort_krev", name: "Тортилья креветки", price: 370, weight: "150г", desc: "Креветки в панировке, лист салата, томат, соус васаби, соус бальзамик" },
-                { id: "burrito", name: "Буррито", price: 450, weight: "300г", desc: "Курица, фасоль красная, перец болгарский, лук, халапеньо, соус ореховый, сыр, кетчуп" }
+                { id: "br_tiftik", name: "Тифтик бургер", price: 570, desc: "280г. Рваная говядина, овощи, моцарелла" },
+                { id: "br_black", name: "Бургер Блэк", price: 460, desc: "315г. Котлета свино-говяжья, овощи, сыр" },
+                { id: "br_chef", name: "Шеф Бургер говядина", price: 470, desc: "320г. Котлета говяжья, сыр, овощи" },
+                { id: "br_ananas", name: "Бургер Ананас", price: 520, desc: "380г. Котлета говяжья, ананас" },
+                { id: "br_chkalov", name: "Бургер Чкаловский", price: 540, desc: "400г. Курица в панировке, сыр, карри" },
+                { id: "br_fish", name: "Фиш бургер", price: 340, desc: "205г. Рыбная котлета, соус тартар" },
+                { id: "br_chiken", name: "Чикен гриббургер", price: 360, desc: "170г. Куриная котлета, жюльен, сыр" }
             ]
         },
         {
             category: "🌭 Хот-доги",
             items: [
-                { id: "hd_class", name: "Хот-дог классик", price: 320, weight: "185г", desc: "Куриная сосиска, лист салата, огурец маринованный, лук, сыр, соус горчичный, кетчуп" },
-                { id: "hd_french", name: "Френч-дог курица", price: 270, weight: "150г", desc: "Куриная сосиска, огурец маринованный, лук сушеный, соус горчичный, кетчуп" },
-                { id: "corn_dog", name: "Корн-дог", price: 370, weight: "100г", desc: "Куриная сосиска, сыр" }
+                { id: "hd_cl", name: "Хот-дог классик", price: 320, desc: "185г. Сосиска, сыр, овощи, соусы" },
+                { id: "hd_fr", name: "Френч-дог курица", price: 270, desc: "150г. Сосиска, лук сушеный, соусы" },
+                { id: "hd_corn", name: "Корн-дог", price: 370, desc: "100г. Куриная сосиска, сыр" }
             ]
         },
         {
-            category: "🍟 Фаст-фуд и Закуски",
+            category: "🔥 Мангал",
             items: [
-                { id: "fah_kur", name: "Фахитос курица", price: 370, weight: "340г", desc: "Курица, кукуруза, маслины, соус белый" },
-                { id: "fah_svin", name: "Фахитос свинина", price: 390, weight: "340г", desc: "Свинина, кукуруза, маслины, соус белый" },
-                { id: "gyro_kur", name: "Гиро курица", price: 370, weight: "370г", desc: "Курица, томат, соус белый, картофель фри" },
-                { id: "gyro_svin", name: "Гиро свинина", price: 410, weight: "370г", desc: "Свинина, томат, соус белый, картофель фри" },
-                { id: "ch_moc", name: "Чиабатта моцарелла", price: 430, weight: "220г", desc: "Моцарелла, томат, микс салата, соус бальзамик, соус песто" },
-                { id: "ch_kur", name: "Чиабатта курица", price: 340, weight: "180г", desc: "Курица, томат, микс салата, соус карри" },
-                { id: "fri_100", name: "Картофель фри", price: 130, weight: "100г" },
-                { id: "fri_dol", name: "Картофельные дольки", price: 160, weight: "130г" },
-                { id: "wings", name: "Куриные крылья", price: 380, weight: "180г" },
-                { id: "nuggets", name: "Наггетсы (6 шт)", price: 190 },
-                { id: "cheese_balls", name: "Сырные шарики (6 шт)", price: 230 },
-                { id: "shamp", name: "Шампиньоны в панко (6 шт)", price: 220 },
-                { id: "hashbrown", name: "Хашбраун", price: 90, weight: "60г" }
+                { id: "m_lulya_kur", name: "Люля куриные", price: 260, desc: "125/70г." },
+                { id: "m_lulya_sv", name: "Люля свино-говяжьи", price: 280, desc: "125/70г." },
+                { id: "m_shash_bed", name: "Шашлык куриное бедро", price: 440, desc: "250/80г." },
+                { id: "m_shash_sv", name: "Шашлык свинина", price: 490, desc: "250/80г." }
             ]
         },
         {
-            category: "🍱 Боулы и Салаты",
+            category: "🥣 Супы",
             items: [
-                { id: "bowl_los", name: "Боул лосось", price: 480, weight: "300г", desc: "Лосось с/с, огурец, редис, бобы эдамаме, кукуруза, чука, авокадо, кунжут, рис, соус чили-майонез" },
-                { id: "bowl_kur", name: "Боул курица", price: 320, weight: "320г", desc: "Курица, огурец, огурец маринованный, томат, кукуруза, гречка, соус фруктово-горчичный" },
-                { id: "sal_grech", name: "Греческий", price: 340, weight: "210г", desc: "Томат, огурец, перец болгарский, лук, фета, лист салата, маслины" },
-                { id: "sal_cez", name: "Цезарь копченая курица", price: 360, weight: "180г", desc: "Курица копченая, томат, лист салата, пармезан, гренки, соус цезарь" },
-                { id: "sal_tun", name: "Салат тунец", price: 460, weight: "205г", desc: "Яйцо куриное, тунец, микс салата, томат, огурец, картофель, масло оливковое" },
-                { id: "sal_moc", name: "Салат с моцареллой", price: 420, weight: "125г", desc: "Моцарелла, томат, микс салата, крем-соус бальзамик, соус песто" }
-            ]
-        },
-        {
-            category: "🔥 Мангал и Супы",
-            items: [
-                { id: "lulya_kur", name: "Люля куриные", price: 260, weight: "125/70г" },
-                { id: "lulya_svin", name: "Люля свино-говяжьи", price: 280, weight: "125/70г" },
-                { id: "shash_bed", name: "Шашлык куриное бедро", price: 440, weight: "250/80г" },
-                { id: "shash_svin", name: "Шашлык свинина", price: 490, weight: "250/80г" },
-                { id: "soup_grib", name: "Суп-пюре грибной", price: 350, weight: "210г" },
-                { id: "soup_kur", name: "Лапша куриная", price: 210, weight: "290г" }
-            ]
-        },
-        {
-            category: "🎁 Комбо Обеды",
-            items: [
-                { id: "combo_1", name: "КОМБО 1", price: 500, desc: "Хот-дог, напиток, фри, соус" },
-                { id: "combo_2", name: "КОМБО 2", price: 550, desc: "Блэк бургер, хашбраун, напиток" },
-                { id: "combo_3", name: "КОМБО 3", price: 540, desc: "Гриббургер, напиток, фри, соус" },
-                { id: "combo_4", name: "КОМБО 4", price: 620, desc: "Суп лапша, салат цезарь, хашбраун, напиток" },
-                { id: "combo_5", name: "КОМБО 5", price: 520, desc: "Фишбургер, напиток, фри, соус" },
-                { id: "combo_6", name: "КОМБО 6", price: 640, desc: "Тифтик бургер, хашбраун, напиток" }
-            ]
-        },
-        {
-            category: "🍰 Десерты",
-            items: [
-                { id: "oladi", name: "Оладьи", price: 90, weight: "75г" },
-                { id: "syrniki", name: "Сырники", price: 240, weight: "140г" },
-                { id: "pie_cherry", name: "Пирожок с вишней ХАБ", price: 120, weight: "80г" },
-                { id: "cake_mork", name: "Торт морковный", price: 240, weight: "100г" },
-                { id: "cake_brownie", name: "Торт Брауни", price: 220, weight: "100г" },
-                { id: "cheese_shok", name: "Чизкейк шоколадный", price: 210, weight: "100г" },
-                { id: "cheese_class", name: "Чизкейк классический", price: 210, weight: "100г" },
-                { id: "eclair", name: "Эклер в ассортименте", price: 180, weight: "60г" },
-                { id: "medovik", name: "Медовик", price: 260, weight: "110г" },
-                { id: "napoleon", name: "Наполеон", price: 320, weight: "200г" },
-                { id: "trif_snickers", name: "Трайфл Сникерс", price: 300, weight: "150г" },
-                { id: "trif_ananas", name: "Трайфл сметанный с ананасом", price: 270, weight: "150г" },
-                { id: "macaron", name: "Макарон (1 шт)", price: 130 }
-            ]
-        },
-        {
-            category: "☕ Горячие напитки и Чай",
-            items: [
-                { id: "amer", name: "Американо", price: 140, weight: "220мл" },
-                { id: "cap", name: "Капучино", price: 190, weight: "220мл" },
-                { id: "latte", name: "Латте", price: 200, weight: "220мл" },
-                { id: "tea_black", name: "Чай черный/зеленый", price: 90, weight: "220мл" },
-                { id: "tea_brus", name: "Чай Брусника-каркаде", price: 270, weight: "350мл" },
-                { id: "tea_imb", name: "Чай Имбирь-лимон", price: 270, weight: "350мл" },
-                { id: "tea_mango", name: "Чай Манго-маракуйя", price: 270, weight: "350мл" },
-                { id: "tea_obl", name: "Чай Облепиховый", price: 270, weight: "350мл" },
-                { id: "tea_glint", name: "Чай Глинтвейн", price: 270, weight: "350мл" }
-            ]
-        },
-        {
-            category: "🥤 Охлажденные напитки",
-            items: [
-                { id: "aqua", name: "Аква Минерале 0.5", price: 90 },
-                { id: "lim_spark", name: "Лимонад Sparkling (клуб/манг/мох)", price: 170 },
-                { id: "evervess", name: "Evervess (Кола/Лимон/Апельсин) 0.33", price: 110 },
-                { id: "lipton", name: "Чай LIPTON 0.5", price: 150 },
-                { id: "adrenaline", name: "Адреналин Раш 0.5", price: 190 },
-                { id: "lim_house", name: "Лимонады крафт 0.475", price: 290, desc: "Мохито / Клубничный / Манго" },
-                { id: "shake", name: "Молочные коктейли 0.45", price: 260, desc: "Сливочный / Шоколадный / Манго / Клубничный" }
+                { id: "s_grib", name: "Суп-пюре грибной", price: 350, desc: "210г." },
+                { id: "s_kur", name: "Лапша куриная", price: 210, desc: "290г." }
             ]
         }
     ];
@@ -181,67 +97,103 @@
         { n: "🧀 Сыр", p: 40 },
         { n: "🔥 Халапеньо", p: 30 },
         { n: "🍟 Картофель", p: 30 },
-        { n: "🥒 Огурец мар.", p: 20 },
-        { n: "🌽 Кукуруза", p: 20 },
-        { n: "🍋 Лимон", p: 10 },
-        { n: "🫒 Маслины", p: 40 }
+        { n: "🥒 Огурец мар.", p: 20 }
     ];
 
-    function init() {
-        const root = document.getElementById('menu-content');
+    let cart = {};
+
+    function render() {
+        const container = document.getElementById('menu-content');
+        container.innerHTML = ''; 
+
         menuData.forEach(cat => {
-            const section = document.createElement('div');
-            section.innerHTML = `<div class="category-title">${cat.category}</div>`;
+            const catTitle = document.createElement('div');
+            catTitle.className = 'category-title';
+            catTitle.innerText = cat.category;
+            container.appendChild(catTitle);
+
             cat.items.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'item-card';
                 card.id = `item-${item.id}`;
                 card.innerHTML = `
                     <div class="item-header">
-                        <div class="item-name">${item.name} ${item.weight ? `<span class="weight">(${item.weight})</span>` : ''}</div>
+                        <div class="item-name">${item.name}</div>
                         <div class="item-price">${item.price}₽</div>
                     </div>
-                    ${item.desc ? `<div class="item-desc">${item.desc}</div>` : '<div style="margin-bottom:10px"></div>'}
-                    <div class="controls"><div class="qty-box">
-                        <button class="btn-qty" onclick="update('${item.id}', -1, ${item.price})">−</button>
-                        <span class="qty-num" id="q-${item.id}">0</span>
-                        <button class="btn-qty" onclick="update('${item.id}', 1, ${item.price})">+</button>
-                    </div></div>
+                    <div class="item-desc">${item.desc}</div>
+                    <div class="controls">
+                        <div class="qty-box">
+                            <button class="btn-qty" onclick="changeQty('${item.id}', -1, ${item.price})">−</button>
+                            <span class="qty-num" id="q-${item.id}">0</span>
+                            <button class="btn-qty" onclick="changeQty('${item.id}', 1, ${item.price})">+</button>
+                        </div>
+                    </div>
                     <div class="addon-section" id="a-${item.id}">
-                        <div class="addon-grid">${addons.map(a => `<div class="addon-item"><input type="checkbox" class="cb" data-p="${a.p}" data-n="${a.n}" onchange="recalc()"><span>${a.n} (+${a.p}₽)</span></div>`).join('')}</div>
-                        <textarea id="c-${item.id}" placeholder="Комментарий (например: без лука)"></textarea>
-                    </div>`;
-                section.appendChild(card);
+                        <div class="addon-grid">
+                            ${addons.map(a => `<div class="addon-item"><input type="checkbox" class="cb" data-p="${a.p}" data-n="${a.n}" onchange="recalc()"><span>${a.n} (+${a.p}₽)</span></div>`).join('')}
+                        </div>
+                        <textarea id="c-${item.id}" placeholder="Комментарий к блюду..."></textarea>
+                    </div>
+                `;
+                container.appendChild(card);
             });
-            root.appendChild(section);
         });
     }
 
-    function update(id, d, p) {
-        if (!cart[id]) cart[id] = { q: 0, p: p };
-        cart[id].q += d;
+    window.changeQty = function(id, delta, price) {
+        if (!cart[id]) cart[id] = { q: 0, p: price };
+        cart[id].q += delta;
         if (cart[id].q < 0) cart[id].q = 0;
+
         document.getElementById(`q-${id}`).innerText = cart[id].q;
         document.getElementById(`a-${id}`).style.display = cart[id].q > 0 ? 'block' : 'none';
         recalc();
-    }
+    };
 
-    function recalc() {
-        let total = 0; let order = [];
+    window.recalc = function() {
+        let total = 0;
+        let orderData = [];
+
         for (const id in cart) {
             if (cart[id].q > 0) {
                 let itemSum = cart[id].q * cart[id].p;
                 const card = document.getElementById(`item-${id}`);
                 const ads = [];
-                card.querySelectorAll('.cb:checked').forEach(c => { itemSum += parseInt(c.dataset.p); ads.push(c.dataset.n); });
+                
+                card.querySelectorAll('.cb:checked').forEach(c => {
+                    itemSum += parseInt(c.dataset.p);
+                    ads.push(c.dataset.n);
+                });
+
                 total += itemSum;
-                order.push({ name: card.querySelector('.item-name').innerText, q: cart[id].q, ads: ads, comment: document.getElementById(`c-${id}`).value });
+                orderData.push({
+                    name: card.querySelector('.item-name').innerText,
+                    q: cart[id].q,
+                    addons: ads,
+                    comment: document.getElementById(`c-${id}`).value
+                });
             }
         }
-        if (total > 0) { tg.MainButton.setText(`ОФОРМИТЬ: ${total}₽`); tg.MainButton.show(); } else tg.MainButton.hide();
-        tg.onEvent('mainButtonClicked', () => { tg.sendData(JSON.stringify(order)); tg.close(); });
-    }
-    init();
+
+        if (total > 0) {
+            tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ: ${total}₽`);
+            tg.MainButton.show();
+        } else {
+            tg.MainButton.hide();
+        }
+
+        tg.MainButton.offClick(handleMainButtonClick); 
+        tg.MainButton.onClick(handleMainButtonClick);
+
+        function handleMainButtonClick() {
+            if (orderData.length > 0) {
+                tg.sendData(JSON.stringify(orderData));
+            }
+        }
+    };
+
+    render();
 </script>
 </body>
 </html>
