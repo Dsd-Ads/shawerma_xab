@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --tg-theme-bg-color: #ffffff;
+            --tg-theme-secondary-bg-color: #f5f5f5;
+            --tg-theme-button-color: #248b91;
+            --tg-theme-text-color: #222222;
+        }
+        body { font-family: sans-serif; background: var(--tg-theme-bg-color); color: var(--tg-theme-text-color); padding: 10px; padding-bottom: 80px; }
+        .item-card { background: var(--tg-theme-secondary-bg-color); border-radius: 12px; padding: 15px; margin-bottom: 15px; }
+        .item-header { display: flex; justify-content: space-between; font-weight: bold; }
+        
+        /* Стили для блока выбора внутри карточки */
+        .order-controls { margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px; }
+        .addons-list { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 8px; font-size: 0.8rem; }
+        .addon-item { display: flex; align-items: center; gap: 5px; }
+        
+        .qty-controls { display: flex; align-items: center; gap: 15px; margin-top: 10px; }
+        .btn-qty { background: var(--tg-theme-button-color); color: white; border: none; border-radius: 5px; width: 30px; height: 30px; font-weight: bold; }
+        .count { font-weight: bold; font-size: 1.1rem; }
+        
+        textarea { width: 100%; margin-top: 8px; border-radius: 5px; border: 1px solid #ccc; font-size: 0.8rem; padding: 5px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+    <div id="menu">
+        <div class="item-card" data-id="sh_hub">
+            <div class="item-header"><span>🌟 Шаурма ХАБ</span><span>390₽</span></div>
+            <div class="order-controls">
+                <div class="qty-controls">
+                    <button class="btn-qty" onclick="changeQty('sh_hub', -1)">-</button>
+                    <span class="count" id="count-sh_hub">0</span>
+                    <button class="btn-qty" onclick="changeQty('sh_hub', 1)">+</button>
+                </div>
+                
+                <div id="extra-block-sh_hub" style="display:none;">
+                    <div class="addons-list">
+                        <label class="addon-item"><input type="checkbox" class="cb" data-name="Сыр" data-price="40"> Сыр</label>
+                        <label class="addon-item"><input type="checkbox" class="cb" data-name="Халапеньо" data-price="30"> Халапеньо</label>
+                    </div>
+                    <textarea placeholder="Комментарий к этой шаурме..." class="item-comment"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        let cart = {};
+
+        function changeQty(id, delta) {
+            if (!cart[id]) cart[id] = { qty: 0, name: document.querySelector(`[data-id="${id}"] .item-header span`).innerText, basePrice: 390 };
+            
+            cart[id].qty += delta;
+            if (cart[id].qty < 0) cart[id].qty = 0;
+            
+            document.getElementById(`count-${id}`).innerText = cart[id].qty;
+            document.getElementById(`extra-block-${id}`).style.display = cart[id].qty > 0 ? 'block' : 'none';
+            
+            updateMainButton();
+        }
+
+        function updateMainButton() {
+            let total = 0;
+            let hasItems = false;
+            
+            for (let id in cart) {
+                if (cart[id].qty > 0) {
+                    total += cart[id].qty * cart[id].basePrice;
+                    hasItems = true;
+                }
+            }
+            
+            if (hasItems) {
+                tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ (${total}₽)`);
+                tg.MainButton.show();
+            } else {
+                tg.MainButton.hide();
+            }
+        }
+
+        tg.onEvent('mainButtonClicked', function() {
+            let finalOrder = [];
+            for (let id in cart) {
+                if (cart[id].qty > 0) {
+                    let card = document.querySelector(`[data-id="${id}"]`);
+                    let selectedAddons = Array.from(card.querySelectorAll('.cb:checked')).map(cb => cb.dataset.name);
+                    let comment = card.querySelector('.item-comment').value;
+                    
+                    finalOrder.push({
+                        name: cart[id].name,
+                        qty: cart[id].qty,
+                        addons: selectedAddons,
+                        comment: comment
+                    });
+                }
+            }
+            tg.sendData(json.stringify(finalOrder));
+        });
+    </script>
+</body>
+</html>
