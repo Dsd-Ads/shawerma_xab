@@ -3,28 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Шаурма Хаб - Меню</title>
+    <title>Шаурма Хаб</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --tg-theme-bg-color: #ffffff;
-            --tg-theme-secondary-bg-color: #f5f5f5;
             --tg-theme-button-color: #248b91;
-            --tg-theme-text-color: #222222;
-            --tg-theme-hint-color: #707579;
+            --tg-theme-button-text-color: #ffffff;
+            --tg-theme-secondary-bg-color: #f5f5f5;
         }
-        body { font-family: -apple-system, sans-serif; background: var(--tg-theme-bg-color); color: var(--tg-theme-text-color); margin: 0; padding: 10px; padding-bottom: 100px; }
-        .category { font-size: 1rem; font-weight: 800; text-transform: uppercase; color: var(--tg-theme-button-color); margin: 25px 0 10px; border-bottom: 2px solid; padding-bottom: 5px; }
-        .item-card { background: var(--tg-theme-secondary-bg-color); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid transparent; }
+        body { font-family: sans-serif; background: var(--tg-theme-bg-color); margin: 0; padding: 10px; padding-bottom: 100px; }
+        .category { font-weight: bold; text-transform: uppercase; color: var(--tg-theme-button-color); margin: 20px 0 10px; border-bottom: 2px solid; }
+        .item-card { background: var(--tg-theme-secondary-bg-color); border-radius: 12px; padding: 12px; margin-bottom: 10px; }
         .item-header { display: flex; justify-content: space-between; font-weight: bold; }
-        .item-desc { font-size: 0.75rem; color: var(--tg-theme-hint-color); margin: 4px 0; }
         .controls { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
-        .qty-box { display: flex; align-items: center; gap: 15px; }
-        .btn-qty { background: var(--tg-theme-button-color); color: white; border: none; border-radius: 6px; width: 34px; height: 34px; font-size: 1.2rem; cursor: pointer; }
+        .btn-qty { background: var(--tg-theme-button-color); color: white; border: none; border-radius: 6px; width: 35px; height: 35px; font-size: 1.2rem; cursor: pointer; }
         .addon-block { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd; }
-        .addons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.75rem; }
-        textarea { width: 100%; box-sizing: border-box; margin-top: 8px; border-radius: 8px; border: 1px solid #ccc; padding: 8px; font-size: 0.8rem; resize: none; font-family: inherit; }
-        .price { font-weight: 900; color: var(--tg-theme-button-color); }
+        .addons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem; }
+        textarea { width: 100%; box-sizing: border-box; margin-top: 8px; border-radius: 8px; border: 1px solid #ccc; padding: 8px; font-family: inherit; }
     </style>
 </head>
 <body>
@@ -32,6 +28,7 @@
 <div id="menu-container"></div>
 
 <script>
+    // Инициализация Telegram
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
@@ -40,65 +37,30 @@
         {
             category: "🌯 Шаурма",
             items: [
-                { id: "sh_kur_st", name: "Шаурма Курица (Стандарт)", price: 290, desc: "Овощи, соусы, корейская морковь" },
-                { id: "sh_kur_big", name: "Шаурма Курица (Большая)", price: 350, desc: "Овощи, соусы, корейская морковь" },
-                { id: "sh_svin_st", name: "Шаурма Свинина (Стандарт)", price: 320, desc: "Капуста, овощи, маринов. лук" },
-                { id: "sh_svin_big", name: "Шаурма Свинина (Большая)", price: 380, desc: "Капуста, овощи, маринов. лук" },
-                { id: "sh_hub", name: "🌟 Шаурма ХАБ", price: 390, desc: "Курица, овощи на мангале, аджика, фета" },
-                { id: "sh_fish", name: "🐟 Шаурма Скумбрия", price: 340, desc: "Запеченная скумбрия, терияки, овощи" }
-            ]
-        },
-        {
-            category: "🍔 Бургеры & Фаст-фуд",
-            items: [
-                { id: "brg_black", name: "Бургер Блэк", price: 460, desc: "Свино-говяжья котлета, овощи" },
-                { id: "brg_tiftik", name: "Тифтик Бургер", price: 570, desc: "Рваная говядина, моцарелла" },
-                { id: "burrito", name: "Буррито", price: 450, desc: "Курица, фасоль, халапеньо, сыр" },
-                { id: "hotdog_cl", name: "Хот-Дог Классик", price: 190, desc: "Сосиска, булка, кетчуп, горчица" },
-                { id: "hotdog_fr", name: "Хот-Дог Френч", price: 210, desc: "Французская булочка, сосиска" }
-            ]
-        },
-        {
-            category: "🔥 Мангал & Закуски",
-            items: [
-                { id: "m_bedro", name: "Шашлык Куриное бедро", price: 440, desc: "250/80 г порция" },
-                { id: "m_svin", name: "Шашлык Свинина", price: 490, desc: "250/80 г порция" },
-                { id: "m_lulya", name: "Люля куриные", price: 260, desc: "125/70 г" },
-                { id: "fries", name: "Картофель Фри", price: 130, desc: "Порция 100г" }
-            ]
-        },
-        {
-            category: "🥗 Салаты & Боулы",
-            items: [
-                { id: "b_salmon", name: "Боул Лосось", price: 480, desc: "Лосось с/с, рис, авокадо, чука" },
-                { id: "s_cezar", name: "Цезарь с курицей", price: 360, desc: "Классический салат" }
+                { id: "sh_kur_st", name: "Шаурма Курица (Стандарт)", price: 290 },
+                { id: "sh_kur_big", name: "Шаурма Курица (Большая)", price: 350 },
+                { id: "sh_svin_st", name: "Шаурма Свинина (Стандарт)", price: 320 },
+                { id: "sh_svin_big", name: "Шаурма Свинина (Большая)", price: 380 },
+                { id: "sh_hub", name: "🌟 Шаурма ХАБ", price: 390 },
+                { id: "sh_fish", name: "🐟 Шаурма Скумбрия", price: 340 }
             ]
         },
         {
             category: "🎁 Комбо Обеды",
             items: [
-                { id: "c1", name: "Комбо №1 (Хот-дог)", price: 500, desc: "Хот-дог, фри, напиток, соус" },
-                { id: "c2", name: "Комбо №2 (Бургер)", price: 550, desc: "Блэк бургер, хашбраун, напиток" },
-                { id: "c3", name: "Комбо №3 (Шаурма)", price: 520, desc: "Шаурма стандарт, фри, напиток" }
-            ]
-        },
-        {
-            category: "☕️ Напитки & Десерты",
-            items: [
-                { id: "d_trub", name: "Вафельная трубочка", price: 150, desc: "Со сгущенкой" },
-                { id: "n_lim", name: "Лимонад", price: 170, desc: "350 мл" },
-                { id: "n_latte", name: "Латте / Капучино", price: 190, desc: "220 мл" }
+                { id: "c1", name: "Комбо №1 (Хот-дог)", price: 500 },
+                { id: "c2", name: "Комбо №2 (Бургер)", price: 550 },
+                { id: "c3", name: "Комбо №3 (Шаурма)", price: 520 }
             ]
         }
+        // Добавь остальные категории по аналогии здесь
     ];
 
     const addons = [
         { n: "🧀 Сыр", p: 40 },
         { n: "🔥 Халапеньо", p: 30 },
         { n: "🍟 Картофель", p: 30 },
-        { n: "🥒 Огурец мар.", p: 20 },
-        { n: "🫒 Маслины", p: 40 },
-        { n: "🌽 Кукуруза", p: 20 }
+        { n: "🥒 Огурец мар.", p: 20 }
     ];
 
     let cart = {};
@@ -106,33 +68,32 @@
     function renderMenu() {
         const container = document.getElementById('menu-container');
         menuData.forEach(cat => {
-            const catHeader = document.createElement('div');
-            catHeader.className = 'category';
-            catHeader.innerText = cat.category;
-            container.appendChild(catHeader);
+            const h = document.createElement('div');
+            h.className = 'category';
+            h.innerText = cat.category;
+            container.appendChild(h);
 
             cat.items.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'item-card';
-                itemDiv.dataset.id = item.id;
-                itemDiv.innerHTML = `
-                    <div class="item-header"><span>${item.name}</span><span class="price">${item.price}₽</span></div>
-                    <div class="item-desc">${item.desc}</div>
+                const div = document.createElement('div');
+                div.className = 'item-card';
+                div.dataset.id = item.id;
+                div.innerHTML = `
+                    <div class="item-header"><span>${item.name}</span><span>${item.price}₽</span></div>
                     <div class="controls">
                         <div class="qty-box">
                             <button class="btn-qty" onclick="updateQty('${item.id}', -1, ${item.price})">-</button>
-                            <span id="q-${item.id}">0</span>
+                            <span style="margin: 0 10px; font-weight:bold;" id="q-${item.id}">0</span>
                             <button class="btn-qty" onclick="updateQty('${item.id}', 1, ${item.price})">+</button>
                         </div>
                     </div>
                     <div class="addon-block" id="ab-${item.id}">
                         <div class="addons-grid">
-                            ${addons.map(a => `<label><input type="checkbox" class="cb" data-n="${a.n}" data-p="${a.p}" onchange="calc()"> ${a.n} (+${a.p}₽)</label>`).join('')}
+                            ${addons.map(a => `<label><input type="checkbox" class="cb" data-n="${a.n}" data-p="${a.p}" onchange="calc()"> ${a.n}</label>`).join('')}
                         </div>
-                        <textarea placeholder="Комментарий к блюду..."></textarea>
+                        <textarea placeholder="Комментарий..."></textarea>
                     </div>
                 `;
-                container.appendChild(itemDiv);
+                container.appendChild(div);
             });
         });
     }
@@ -152,16 +113,17 @@
 
     function calc() {
         let total = 0;
-        let hasItems = false;
+        let count = 0;
         for (let id in cart) {
             if (cart[id].qty > 0) {
                 total += cart[id].qty * cart[id].price;
                 const card = document.querySelector(`[data-id="${id}"]`);
                 card.querySelectorAll('.cb:checked').forEach(cb => total += parseInt(cb.dataset.p));
-                hasItems = true;
+                count++;
             }
         }
-        if (hasItems) {
+        
+        if (count > 0) {
             tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ (${total}₽)`);
             tg.MainButton.show();
         } else {
@@ -169,22 +131,30 @@
         }
     }
 
-    tg.onEvent('mainButtonClicked', () => {
-        let order = [];
-        for (let id in cart) {
-            if (cart[id].qty > 0) {
-                const card = document.querySelector(`[data-id="${id}"]`);
-                order.push({
-                    name: cart[id].name,
-                    qty: cart[id].qty,
-                    addons: Array.from(card.querySelectorAll('.cb:checked')).map(cb => cb.dataset.n),
-                    comment: card.querySelector('textarea').value
-                });
+    // ГЛАВНОЕ: Обработка нажатия кнопки
+    tg.onEvent('mainButtonClicked', function() {
+        try {
+            let order = [];
+            for (let id in cart) {
+                if (cart[id].qty > 0) {
+                    const card = document.querySelector(`[data-id="${id}"]`);
+                    order.push({
+                        name: cart[id].name,
+                        qty: cart[id].qty,
+                        addons: Array.from(card.querySelectorAll('.cb:checked')).map(cb => cb.dataset.n),
+                        comment: card.querySelector('textarea').value
+                    });
+                }
             }
-        }
-        if (order.length > 0) {
-            tg.sendData(JSON.stringify(order));
-            tg.close();
+
+            if (order.length > 0) {
+                const data = JSON.stringify(order);
+                tg.sendData(data); // Отправка данных боту
+            } else {
+                tg.showAlert("Корзина пуста!");
+            }
+        } catch (error) {
+            tg.showAlert("Ошибка при заказе: " + error.message);
         }
     });
 
