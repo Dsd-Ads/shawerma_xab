@@ -2,276 +2,205 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Шаурма Хаб — Меню</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Меню Шаурма Хаб</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --bg-color: var(--tg-theme-bg-color, #ffffff);
-            --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
+            --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f7);
             --text-color: var(--tg-theme-text-color, #000000);
-            --hint-color: var(--tg-theme-hint-color, #999999);
-            --link-color: var(--tg-theme-link-color, #248bed);
+            --hint-color: var(--tg-theme-hint-color, #707579);
             --button-color: var(--tg-theme-button-color, #248b91);
             --button-text: var(--tg-theme-button-text-color, #ffffff);
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0;
-            user-select: none; -webkit-tap-highlight-color: transparent; scroll-behavior: smooth;
-        }
-
-        header {
-            background-color: var(--bg-color); position: sticky; top: 0; z-index: 100;
-            padding: 12px; text-align: center; font-weight: 600; border-bottom: 0.5px solid rgba(0,0,0,0.1);
-        }
-
-        .nav-tabs {
-            display: flex; overflow-x: auto; background-color: var(--bg-color);
-            padding: 8px 12px; gap: 8px; position: sticky; top: 45px; z-index: 99;
-            border-bottom: 0.5px solid rgba(0,0,0,0.1);
-        }
-        .nav-tabs::-webkit-scrollbar { display: none; }
-
-        .nav-btn {
-            padding: 6px 16px; background-color: var(--secondary-bg);
-            color: var(--text-color); border-radius: 16px;
-            font-size: 14px; font-weight: 500; text-decoration: none;
-            white-space: nowrap; transition: all 0.2s ease;
-        }
-        .nav-btn.active { background-color: var(--button-color); color: var(--button-text); }
-
-        .section-anchor { scroll-margin-top: 100px; }
-
-        .category-header {
-            padding: 20px 16px 8px; font-size: 14px; font-weight: 600;
-            color: var(--hint-color); text-transform: uppercase; letter-spacing: 0.5px;
-        }
-
-        .item-card-wrapper { border-bottom: 0.5px solid rgba(0,0,0,0.05); padding: 12px 16px; }
-        .item-main { display: flex; gap: 12px; align-items: center; }
-
-        .item-img {
-            width: 80px; height: 80px; border-radius: 10px;
-            background-color: var(--secondary-bg); background-size: cover; background-position: center; flex-shrink: 0;
-        }
-
-        .item-info { flex-grow: 1; }
-        .item-title { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
-        .item-desc { font-size: 13px; color: var(--hint-color); line-height: 1.2; }
-
-        .item-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; min-width: 80px; }
-        .price { font-weight: 600; font-size: 15px; }
-
-        .add-btn {
-            background-color: var(--secondary-bg); color: var(--link-color); border: none;
-            padding: 5px 15px; border-radius: 14px; font-weight: 600; font-size: 14px; cursor: pointer;
-        }
-
-        .counter {
-            display: none; align-items: center; background-color: var(--button-color);
-            color: var(--button-text); border-radius: 14px; padding: 3px;
-        }
-        .counter button {
-            background: none; border: none; color: var(--button-text);
-            font-size: 18px; font-weight: bold; width: 30px; height: 24px; cursor: pointer;
-        }
-        .count-num { width: 20px; text-align: center; font-weight: 600; }
-
-        .addon-section {
-            display: none; margin-top: 12px; padding: 12px;
-            background-color: var(--secondary-bg); border-radius: 10px;
-        }
-        
-        .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-        .addon-item { display: flex; align-items: center; font-size: 13px; background: var(--bg-color); padding: 8px; border-radius: 8px; }
-        .addon-item input { margin-right: 8px; width: 16px; height: 16px; accent-color: var(--button-color); }
-        
-        .comment-label {
-            font-size: 12px; color: var(--hint-color); margin-bottom: 4px; display: block;
-            text-transform: uppercase; font-weight: 600; margin-top: 8px;
-        }
-
-        textarea, select {
-            width: 100%; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);
-            padding: 8px; font-size: 14px; background: var(--bg-color);
-            color: var(--text-color); box-sizing: border-box; outline: none; font-family: inherit;
-        }
-        select { margin-bottom: 10px; }
-
-        .bottom-space { height: 100px; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; overflow-x: hidden; }
+        #app { padding: 15px; padding-bottom: 100px; }
+        .category-title { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; color: var(--button-color); margin: 25px 0 12px; border-left: 5px solid var(--button-color); padding-left: 10px; }
+        .item-card { background: var(--secondary-bg); border-radius: 16px; padding: 14px; margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.05); }
+        .item-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .item-name { font-size: 1rem; font-weight: 700; flex: 1; }
+        .item-price { font-weight: 800; color: var(--button-color); margin-left: 10px; }
+        .item-desc { font-size: 0.8rem; color: var(--hint-color); margin: 6px 0 12px; line-height: 1.2; }
+        .controls { display: flex; justify-content: flex-end; align-items: center; margin-top: 10px; }
+        .qty-box { display: flex; align-items: center; background: var(--bg-color); border-radius: 10px; padding: 2px; }
+        .btn-qty { background: var(--button-color); color: var(--button-text); border: none; border-radius: 8px; width: 36px; height: 36px; font-weight: bold; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .qty-num { margin: 0 15px; font-weight: 700; font-size: 1.1rem; min-width: 20px; text-align: center; }
+        .addon-section { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(0,0,0,0.1); }
+        .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .addon-item { display: flex; align-items: center; font-size: 0.8rem; background: var(--bg-color); padding: 8px; border-radius: 8px; }
+        .addon-item input { margin-right: 8px; width: 18px; height: 18px; }
+        textarea { width: 100%; margin-top: 10px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); padding: 10px; font-size: 0.85rem; background: var(--bg-color); color: var(--text-color); box-sizing: border-box; resize: none; }
     </style>
 </head>
 <body>
-
-<header>Шаурма Хаб</header>
-<div class="nav-tabs" id="nav-tabs"></div>
-<div id="menu-list"></div>
-<div class="bottom-space"></div>
+    <div id="app">
+        <div id="menu-content"></div>
+    </div>
 
 <script>
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
 
-    const categories = {
-        'combo': '🍱 Комбо',
-        'shawarma': '🌯 Шаурма',
-        'hotdogs': '🌭 Хот-доги',
-        'snacks': '🍟 Закуски'
-    };
-
-    const menuItems = [
-        { 
-            id: "combo_1", 
-            category: "combo", 
-            title: "Комбо №1 (Хот-дог + Фри)", 
-            price: 490, 
-            desc: "Хот-дог, фри, напиток и соус", 
-            selects: [
-                { id: "drink", label: "🥤 Напиток", options: ["Кола", "Сок", "Айран", "Вода"] },
-                { id: "sauce", label: "🍯 Соус", options: ["Чесночный", "Сырный", "Острый"] }
+    const menuData = [
+        {
+            category: "🌯 Шаурма",
+            items: [
+                { id: "sh_kur_st", name: "Шаурма курица (Стандарт)", price: 290, desc: "390г. Овощи, соусы, корейская морковь" },
+                { id: "sh_kur_big", name: "Шаурма курица (Большая)", price: 350, desc: "500г. Увеличенная порция" },
+                { id: "sh_svin_st", name: "Шаурма свинина (Стандарт)", price: 320, desc: "390г. Овощи, соусы, маринованный лук" },
+                { id: "sh_svin_big", name: "Шаурма свинина (Большая)", price: 390, desc: "500г. Увеличенная порция" },
+                { id: "sh_skum", name: "Шаурма скумбрия", price: 340, desc: "355г. Скумбрия запеченная, терияки" },
+                { id: "sh_hab", name: "🌟 Шаурма ХАБ", price: 390, desc: "330г. Овощи гриль, аджика, соус фета" }
             ]
         },
-        { id: "sh_kur_st", category: "shawarma", title: "Шаурма курица", price: 290, desc: "390г. Овощи, соусы" },
-        { id: "hd_cl", category: "hotdogs", title: "Хот-дог классик", price: 320, desc: "185г. Сосиска, сыр" },
-        { id: "z_fri", category: "snacks", title: "Картофель фри", price: 130, desc: "100г." }
+        {
+            category: "🥪 Сэндвичи & Роллы",
+            items: [
+                { id: "burrito", name: "Буррито", price: 450, desc: "300г. Курица, фасоль, халапеньо, перец, сыр" },
+                { id: "tort_krev", name: "Тортилья креветки", price: 370, desc: "150г. Креветки панко, томат, васаби" },
+                { id: "snd_los", name: "Сэндвич лосось", price: 320, desc: "200г. Лосось с/с, сливочный сыр" },
+                { id: "snd_kur", name: "Сэндвич курица", price: 270, desc: "245г. Копченая курица, овощи, цезарь" }
+            ]
+        },
+        {
+            category: "🍔 Бургеры",
+            items: [
+                { id: "br_tiftik", name: "Тифтик бургер", price: 570, desc: "280г. Рваная говядина, моцарелла" },
+                { id: "br_black", name: "Бургер Блэк", price: 460, desc: "315г. Котлета свино-говяжья, сыр" },
+                { id: "br_ananas", name: "Бургер Ананас", price: 520, desc: "380г. Котлета говяжья, ананас" },
+                { id: "br_chkalov", name: "Бургер Чкаловский", price: 540, desc: "400г. Курица, сыр, карри" }
+            ]
+        },
+        {
+            category: "🌭 Хот-доги",
+            items: [
+                { id: "hd_cl", name: "Хот-дог классик", price: 320, desc: "185г. Сосиска, сыр, овощи, соусы" },
+                { id: "hd_fr", name: "Френч-дог курица", price: 270, desc: "150г. Лук сушеный, соусы" },
+                { id: "hd_corn", name: "Корн-дог", price: 370, desc: "100г. Сосиска в тесте, сыр" }
+            ]
+        },
+        {
+            category: "🍟 Закуски",
+            items: [
+                { id: "z_fri", name: "Картофель фри", price: 130, desc: "100г. Классический фри" },
+                { id: "z_dolki", name: "Картофельные дольки", price: 160, desc: "130г. Со специями" },
+                { id: "z_nag", name: "Наггетсы (6 шт)", price: 190, desc: "Куриное филе в панировке" },
+                { id: "z_balls", name: "Сырные шарики (6 шт)", price: 230, desc: "Тягучий сыр внутри" },
+                { id: "z_shamp", name: "Шампиньоны панко", price: 220, desc: "6 шт. Хрустящие грибы" }
+            ]
+        },
+        {
+            category: "🔥 Мангал & Супы",
+            items: [
+                { id: "m_sh_sv", name: "Шашлык свинина", price: 490, desc: "250/80г." },
+                { id: "m_lulya", name: "Люля куриные", price: 260, desc: "125/70г." },
+                { id: "s_grib", name: "Суп-пюре грибной", price: 350, desc: "210г." },
+                { id: "s_kur", name: "Лапша куриная", price: 210, desc: "290г." }
+            ]
+        }
     ];
 
-    const addonsList = [{ n: "🧀 Сыр", p: 40 }, { n: "🔥 Халапеньо", p: 30 }];
+    const addons = [
+        { n: "🧀 Сыр", p: 40 },
+        { n: "🔥 Халапеньо", p: 30 },
+        { n: "🍟 Картофель", p: 30 },
+        { n: "🥒 Огурец мар.", p: 20 }
+    ];
 
     let cart = {};
 
     function render() {
-        const nav = document.getElementById('nav-tabs');
-        const list = document.getElementById('menu-list');
-        nav.innerHTML = ''; list.innerHTML = '';
-        
-        Object.entries(categories).forEach(([catId, catName]) => {
-            nav.innerHTML += `<a href="#cat-${catId}" class="nav-btn" onclick="highlightNav(this)">${catName}</a>`;
-            list.innerHTML += `<div id="cat-${catId}" class="section-anchor"><div class="category-header">${catName}</div></div>`;
-            
-            menuItems.filter(i => i.category === catId).forEach(item => {
-                const addonsHTML = addonsList.map((a, idx) => `
-                    <div class="addon-item">
-                        <input type="checkbox" class="addon-cb" id="cb-${item.id}-${idx}" data-price="${a.p}" data-name="${a.n}" onchange="updateMainBtn()">
-                        <label for="cb-${item.id}-${idx}">${a.n} (+${a.p}₽)</label>
-                    </div>`).join('');
+        const container = document.getElementById('menu-content');
+        container.innerHTML = ''; 
 
-                let selectsHTML = '';
-                if (item.selects) {
-                    item.selects.forEach(sel => {
-                        selectsHTML += `
-                            <span class="comment-label">${sel.label}</span>
-                            <select class="item-select" data-label="${sel.label}">
-                                ${sel.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                            </select>`;
-                    });
-                }
+        menuData.forEach(cat => {
+            const catTitle = document.createElement('div');
+            catTitle.className = 'category-title';
+            catTitle.innerText = cat.category;
+            container.appendChild(catTitle);
 
-                list.innerHTML += `
-                    <div class="item-card-wrapper" id="card-${item.id}">
-                        <div class="item-main">
-                            <div class="item-img"></div>
-                            <div class="item-info">
-                                <div class="item-title">${item.title}</div>
-                                <div class="item-desc">${item.desc || ''}</div>
-                            </div>
-                            <div class="item-controls">
-                                <div class="price">${item.price} ₽</div>
-                                <button class="add-btn" id="add-${item.id}" onclick="updateCart('${item.id}', 1)">Добавить</button>
-                                <div class="counter" id="cnt-${item.id}">
-                                    <button onclick="updateCart('${item.id}', -1)">−</button>
-                                    <span class="count-num" id="num-${item.id}">0</span>
-                                    <button onclick="updateCart('${item.id}', 1)">+</button>
-                                </div>
-                            </div>
+            cat.items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.id = `item-${item.id}`;
+                card.innerHTML = `
+                    <div class="item-header">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-price">${item.price}₽</div>
+                    </div>
+                    <div class="item-desc">${item.desc}</div>
+                    <div class="controls">
+                        <div class="qty-box">
+                            <button class="btn-qty" onclick="changeQty('${item.id}', -1, ${item.price})">−</button>
+                            <span class="qty-num" id="q-${item.id}">0</span>
+                            <button class="btn-qty" onclick="changeQty('${item.id}', 1, ${item.price})">+</button>
                         </div>
-                        <div class="addon-section" id="addons-${item.id}">
-                            ${selectsHTML}
-                            <div class="addon-grid">${addonsHTML}</div>
-                            <span class="comment-label">Комментарий:</span>
-                            <textarea id="comment-${item.id}" placeholder="Ваши пожелания..." rows="2"></textarea>
+                    </div>
+                    <div class="addon-section" id="a-${item.id}">
+                        <div class="addon-grid">
+                            ${addons.map(a => `<div class="addon-item"><input type="checkbox" class="cb" data-p="${a.p}" data-n="${a.n}" onchange="recalc()"><span>${a.n} (+${a.p}₽)</span></div>`).join('')}
                         </div>
-                    </div>`;
+                        <textarea id="c-${item.id}" placeholder="Комментарий к блюду..."></textarea>
+                    </div>
+                `;
+                container.appendChild(card);
             });
         });
     }
 
-    function updateCart(id, delta) {
-        cart[id] = (cart[id] || 0) + delta;
-        if (cart[id] <= 0) delete cart[id];
-        
-        document.getElementById(`add-${id}`).style.display = cart[id] ? 'none' : 'block';
-        document.getElementById(`cnt-${id}`).style.display = cart[id] ? 'flex' : 'none';
-        document.getElementById(`addons-${id}`).style.display = cart[id] ? 'block' : 'none';
-        if (cart[id]) document.getElementById(`num-${id}`).innerText = cart[id];
-        
-        tg.HapticFeedback.selectionChanged();
-        updateMainBtn(); 
-    }
+    window.changeQty = function(id, delta, price) {
+        if (!cart[id]) cart[id] = { q: 0, p: price };
+        cart[id].q += delta;
+        if (cart[id].q < 0) cart[id].q = 0;
 
-    function updateMainBtn() {
+        document.getElementById(`q-${id}`).innerText = cart[id].q;
+        document.getElementById(`a-${id}`).style.display = cart[id].q > 0 ? 'block' : 'none';
+        recalc();
+    };
+
+    window.recalc = function() {
         let total = 0;
+        let orderArr = [];
+
         for (const id in cart) {
-            const item = menuItems.find(i => String(i.id) === String(id));
-            let price = item.price;
-            document.querySelectorAll(`#card-${id} .addon-cb:checked`).forEach(cb => price += parseInt(cb.dataset.price));
-            total += price * cart[id];
+            if (cart[id].q > 0) {
+                let itemSum = cart[id].q * cart[id].p;
+                const card = document.getElementById(`item-${id}`);
+                const ads = [];
+                
+                card.querySelectorAll('.cb:checked').forEach(c => {
+                    itemSum += parseInt(c.dataset.p);
+                    ads.push(c.dataset.n);
+                });
+
+                total += itemSum;
+                orderArr.push({
+                    name: card.querySelector('.item-name').innerText,
+                    q: cart[id].q,
+                    addons: ads,
+                    comment: document.getElementById(`c-${id}`).value
+                });
+            }
         }
 
         if (total > 0) {
-            tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ: ${total} ₽`);
+            tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ: ${total}₽`);
             tg.MainButton.show();
         } else {
             tg.MainButton.hide();
         }
-    }
 
-    // ВАЖНО: Очистка старых событий перед назначением нового
-    tg.onEvent('mainButtonClicked', function() {
-        try {
-            const orderData = [];
-            let totalSum = 0;
+        tg.MainButton.offClick(handleMainButtonClick); 
+        tg.MainButton.onClick(handleMainButtonClick);
 
-            for (const id in cart) {
-                const item = menuItems.find(i => String(i.id) === String(id));
-                const card = document.getElementById(`card-${id}`);
-                
-                const addons = Array.from(card.querySelectorAll('.addon-cb:checked')).map(cb => cb.dataset.name);
-                const choices = Array.from(card.querySelectorAll('.item-select')).map(s => `${s.dataset.label}: ${s.value}`);
-                const comment = document.getElementById(`comment-${id}`).value;
-
-                let finalItemPrice = item.price;
-                card.querySelectorAll('.addon-cb:checked').forEach(cb => finalItemPrice += parseInt(cb.dataset.price));
-                
-                totalSum += finalItemPrice * cart[id];
-
-                orderData.push({
-                    item: item.title,
-                    count: cart[id],
-                    options: choices.join(', '),
-                    addons: addons.join(', '),
-                    comment: comment
-                });
+        function handleMainButtonClick() {
+            if (orderArr.length > 0) {
+                tg.sendData(JSON.stringify(orderArr));
             }
-
-            if (orderData.length > 0) {
-                tg.sendData(JSON.stringify({
-                    items: orderData,
-                    total: totalSum
-                }));
-            }
-        } catch (e) {
-            alert("Ошибка: " + e.message);
         }
-    });
-
-    function highlightNav(el) {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-    }
+    };
 
     render();
 </script>
