@@ -181,16 +181,23 @@ function recalc(){
   if(total>0){ tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ — ${total}₽`); tg.MainButton.show(); }
   else tg.MainButton.hide();
 
-  tg.MainButton.onClick(()=>{
-    tg.sendData(JSON.stringify({
-      items: cart.map(i=>({name:i.name, addons:i.addons, price:i.base+i.addonPrice})),
-      comment: document.getElementById('orderComment').value,
-      total
-    }));
+  // ВАЖНО: обработчик клика регистрируем ОДИН раз
+
   });
 }
 
 function setActive(el){ document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); el.classList.add('active'); }
+
+// Корректная обработка клика MainButton (Telegram API)
+tg.onEvent('mainButtonClicked', () => {
+  if (!cart.length) return;
+  const total = cart.reduce((s,i)=>s+i.base+i.addonPrice,0);
+  tg.sendData(JSON.stringify({
+    items: cart.map(i=>({ name:i.name, addons:i.addons, price:i.base+i.addonPrice })),
+    comment: document.getElementById('orderComment').value,
+    total
+  }));
+});
 
 render();
 </script>
