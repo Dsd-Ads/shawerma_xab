@@ -12,7 +12,7 @@
             --text-color: var(--tg-theme-text-color, #000000);
             --hint-color: var(--tg-theme-hint-color, #999999);
             --link-color: var(--tg-theme-link-color, #248bed);
-            --button-color: var(--tg-theme-button-color, #248b91); /* Цвет в стиле Шаурма Хаб */
+            --button-color: var(--tg-theme-button-color, #248b91);
             --button-text: var(--tg-theme-button-text-color, #ffffff);
         }
 
@@ -55,12 +55,12 @@
             color: var(--hint-color); text-transform: uppercase; letter-spacing: 0.5px;
         }
 
-        /* Блок выбора времени удален из стилей, так как он больше не нужен */
-
-        .item-card {
-            display: flex; padding: 12px 16px; gap: 12px;
-            border-bottom: 0.5px solid rgba(0,0,0,0.05); align-items: center;
+        .item-card-wrapper {
+            border-bottom: 0.5px solid rgba(0,0,0,0.05);
+            padding: 12px 16px;
         }
+
+        .item-main { display: flex; gap: 12px; align-items: center; }
 
         .item-img {
             width: 80px; height: 80px; border-radius: 10px;
@@ -92,6 +92,38 @@
         }
         .count-num { width: 20px; text-align: center; font-weight: 600; }
 
+        /* ДОБАВКИ И КОММЕНТАРИИ */
+        .addon-section {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            background-color: var(--secondary-bg);
+            border-radius: 10px;
+        }
+        
+        .addon-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;
+        }
+        
+        .addon-item {
+            display: flex; align-items: center; font-size: 13px;
+            background: var(--bg-color); padding: 8px; border-radius: 8px;
+        }
+        
+        .addon-item input { margin-right: 8px; width: 16px; height: 16px; accent-color: var(--button-color); }
+        
+        .comment-label {
+            font-size: 12px; color: var(--hint-color); margin-bottom: 6px; display: block;
+            text-transform: uppercase; font-weight: 600;
+        }
+
+        textarea {
+            width: 100%; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);
+            padding: 8px; font-size: 14px; background: var(--bg-color);
+            color: var(--text-color); box-sizing: border-box; resize: none; outline: none;
+            font-family: inherit;
+        }
+
         .bottom-space { height: 100px; }
     </style>
 </head>
@@ -107,9 +139,7 @@
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
-    tg.MainButton.hide();
 
-    // 1. Категории
     const categories = {
         'shawarma': '🌯 Шаурма',
         'sandwiches': '🥪 Сэндвичи',
@@ -119,45 +149,27 @@
         'bbq': '🔥 Мангал & Супы'
     };
 
-    // 2. Все товары (данные из вашего старого файла перенесены сюда)
     const menuItems = [
-        // Шаурма
         { id: "sh_kur_st", category: "shawarma", title: "Шаурма курица (Стандарт)", price: 290, desc: "390г. Овощи, соусы, корейская морковь", image: "" },
         { id: "sh_kur_big", category: "shawarma", title: "Шаурма курица (Большая)", price: 350, desc: "500г. Увеличенная порция", image: "" },
         { id: "sh_svin_st", category: "shawarma", title: "Шаурма свинина (Стандарт)", price: 320, desc: "390г. Овощи, соусы, маринованный лук", image: "" },
         { id: "sh_svin_big", category: "shawarma", title: "Шаурма свинина (Большая)", price: 390, desc: "500г. Увеличенная порция", image: "" },
         { id: "sh_skum", category: "shawarma", title: "Шаурма скумбрия", price: 340, desc: "355г. Скумбрия запеченная, терияки", image: "" },
         { id: "sh_hab", category: "shawarma", title: "🌟 Шаурма ХАБ", price: 390, desc: "330г. Овощи гриль, аджика, соус фета", image: "" },
-        
-        // Сэндвичи
         { id: "burrito", category: "sandwiches", title: "Буррито", price: 450, desc: "300г. Курица, фасоль, халапеньо, перец, сыр", image: "" },
         { id: "tort_krev", category: "sandwiches", title: "Тортилья креветки", price: 370, desc: "150г. Креветки панко, томат, васаби", image: "" },
-        { id: "snd_los", category: "sandwiches", title: "Сэндвич лосось", price: 320, desc: "200г. Лосось с/с, сливочный сыр", image: "" },
-        { id: "snd_kur", category: "sandwiches", title: "Сэндвич курица", price: 270, desc: "245г. Копченая курица, овощи, цезарь", image: "" },
-        
-        // Бургеры
         { id: "br_tiftik", category: "burgers", title: "Тифтик бургер", price: 570, desc: "280г. Рваная говядина, моцарелла", image: "" },
         { id: "br_black", category: "burgers", title: "Бургер Блэк", price: 460, desc: "315г. Котлета свино-говяжья, сыр", image: "" },
-        { id: "br_ananas", category: "burgers", title: "Бургер Ананас", price: 520, desc: "380г. Котлета говяжья, ананас", image: "" },
-        { id: "br_chkalov", category: "burgers", title: "Бургер Чкаловский", price: 540, desc: "400г. Курица, сыр, карри", image: "" },
-        
-        // Хот-доги
         { id: "hd_cl", category: "hotdogs", title: "Хот-дог классик", price: 320, desc: "185г. Сосиска, сыр, овощи, соусы", image: "" },
-        { id: "hd_fr", category: "hotdogs", title: "Френч-дог курица", price: 270, desc: "150г. Лук сушеный, соусы", image: "" },
-        { id: "hd_corn", category: "hotdogs", title: "Корн-дог", price: 370, desc: "100г. Сосиска в тесте, сыр", image: "" },
-        
-        // Закуски
-        { id: "z_fri", category: "snacks", title: "Картофель фри", price: 130, desc: "100г. Классический фри", image: "" },
-        { id: "z_dolki", category: "snacks", title: "Картофельные дольки", price: 160, desc: "130г. Со специями", image: "" },
-        { id: "z_nag", category: "snacks", title: "Наггетсы (6 шт)", price: 190, desc: "Куриное филе в панировке", image: "" },
-        { id: "z_balls", category: "snacks", title: "Сырные шарики (6 шт)", price: 230, desc: "Тягучий сыр внутри", image: "" },
-        { id: "z_shamp", category: "snacks", title: "Шампиньоны панко", price: 220, desc: "6 шт. Хрустящие грибы", image: "" },
-        
-        // Мангал и Супы
-        { id: "m_sh_sv", category: "bbq", title: "Шашлык свинина", price: 490, desc: "250/80г.", image: "" },
-        { id: "m_lulya", category: "bbq", title: "Люля куриные", price: 260, desc: "125/70г.", image: "" },
-        { id: "s_grib", category: "bbq", title: "Суп-пюре грибной", price: 350, desc: "210г.", image: "" },
-        { id: "s_kur", category: "bbq", title: "Лапша куриная", price: 210, desc: "290г.", image: "" }
+        { id: "z_fri", category: "snacks", title: "Картофель фри", price: 130, desc: "100г.", image: "" },
+        { id: "m_sh_sv", category: "bbq", title: "Шашлык свинина", price: 490, desc: "250/80г.", image: "" }
+    ];
+
+    const addonsList = [
+        { n: "🧀 Сыр", p: 40 },
+        { n: "🔥 Халапеньо", p: 30 },
+        { n: "🍟 Картофель", p: 30 },
+        { n: "🥒 Огурчик", p: 20 }
     ];
 
     let cart = {};
@@ -165,48 +177,47 @@
     function render() {
         const nav = document.getElementById('nav-tabs');
         const list = document.getElementById('menu-list');
-        nav.innerHTML = '';
-        list.innerHTML = '';
+        nav.innerHTML = ''; list.innerHTML = '';
         
-        // Создаем навигацию и списки
         Object.entries(categories).forEach(([catId, catName]) => {
-            // Кнопка навигации
             nav.innerHTML += `<a href="#cat-${catId}" class="nav-btn" onclick="highlightNav(this)">${catName}</a>`;
-            
-            // Заголовок категории
             list.innerHTML += `<div id="cat-${catId}" class="section-anchor"><div class="category-header">${catName}</div></div>`;
             
-            // Товары категории
-            const items = menuItems.filter(i => i.category === catId);
-            
-            items.forEach(item => {
-                // Если картинки нет, фон будет серым
+            menuItems.filter(i => i.category === catId).forEach(item => {
                 const imgStyle = item.image ? `style="background-image: url('${item.image}')"` : '';
-                
+                const addonsHTML = addonsList.map((a, idx) => `
+                    <div class="addon-item">
+                        <input type="checkbox" class="addon-cb" id="cb-${item.id}-${idx}" data-price="${a.p}" data-name="${a.n}" onchange="updateMainBtn()">
+                        <label for="cb-${item.id}-${idx}">${a.n} (+${a.p}₽)</label>
+                    </div>`).join('');
+
                 list.innerHTML += `
-                    <div class="item-card">
-                        <div class="item-img" ${imgStyle}></div>
-                        <div class="item-info">
-                            <div class="item-title">${item.title}</div>
-                            <div class="item-desc">${item.desc || ''}</div>
-                        </div>
-                        <div class="item-controls">
-                            <div class="price">${item.price} ₽</div>
-                            <button class="add-btn" id="add-${item.id}" onclick="updateCart('${item.id}', 1)">Добавить</button>
-                            <div class="counter" id="cnt-${item.id}">
-                                <button onclick="updateCart('${item.id}', -1)">−</button>
-                                <span class="count-num" id="num-${item.id}">0</span>
-                                <button onclick="updateCart('${item.id}', 1)">+</button>
+                    <div class="item-card-wrapper" id="card-${item.id}">
+                        <div class="item-main">
+                            <div class="item-img" ${imgStyle}></div>
+                            <div class="item-info">
+                                <div class="item-title">${item.title}</div>
+                                <div class="item-desc">${item.desc || ''}</div>
                             </div>
+                            <div class="item-controls">
+                                <div class="price">${item.price} ₽</div>
+                                <button class="add-btn" id="add-${item.id}" onclick="updateCart('${item.id}', 1)">Добавить</button>
+                                <div class="counter" id="cnt-${item.id}">
+                                    <button onclick="updateCart('${item.id}', -1)">−</button>
+                                    <span class="count-num" id="num-${item.id}">0</span>
+                                    <button onclick="updateCart('${item.id}', 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="addon-section" id="addons-${item.id}">
+                            <div class="addon-grid">${addonsHTML}</div>
+                            <span class="comment-label">Комментарий:</span>
+                            <textarea id="comment-${item.id}" placeholder="Например: без лука, поострее..." rows="2"></textarea>
                         </div>
                     </div>`;
             });
         });
-
-        // Активируем первую кнопку
-        if (document.querySelector('.nav-btn')) {
-            document.querySelector('.nav-btn').classList.add('active');
-        }
+        if (document.querySelector('.nav-btn')) document.querySelector('.nav-btn').classList.add('active');
     }
 
     function highlightNav(el) {
@@ -216,23 +227,23 @@
     }
 
     function updateCart(id, delta) {
-        const itemId = String(id);
-        cart[itemId] = (cart[itemId] || 0) + delta;
+        cart[id] = (cart[id] || 0) + delta;
+        const addBtn = document.getElementById(`add-${id}`);
+        const counter = document.getElementById(`cnt-${id}`);
+        const num = document.getElementById(`num-${id}`);
+        const addonsBlock = document.getElementById(`addons-${id}`);
 
-        const addBtn = document.getElementById(`add-${itemId}`);
-        const counter = document.getElementById(`cnt-${itemId}`);
-        const num = document.getElementById(`num-${itemId}`);
-
-        if (cart[itemId] > 0) {
-            if (addBtn) addBtn.style.display = 'none';
-            if (counter) counter.style.display = 'flex';
-            if (num) num.innerText = cart[itemId];
+        if (cart[id] > 0) {
+            addBtn.style.display = 'none';
+            counter.style.display = 'flex';
+            num.innerText = cart[id];
+            addonsBlock.style.display = 'block';
         } else {
-            delete cart[itemId];
-            if (addBtn) addBtn.style.display = 'block';
-            if (counter) counter.style.display = 'none';
+            delete cart[id];
+            addBtn.style.display = 'block';
+            counter.style.display = 'none';
+            addonsBlock.style.display = 'none';
         }
-        
         tg.HapticFeedback.selectionChanged();
         updateMainBtn(); 
     }
@@ -240,23 +251,19 @@
     function updateMainBtn() {
         let total = 0;
         let hasItems = false;
-
         for (const id in cart) {
             const count = cart[id];
             const item = menuItems.find(i => String(i.id) === String(id));
             if (item && count > 0) {
-                total += item.price * count;
+                let itemTotal = item.price;
+                const card = document.getElementById(`card-${id}`);
+                card.querySelectorAll('.addon-cb:checked').forEach(cb => itemTotal += parseInt(cb.dataset.price));
+                total += itemTotal * count;
                 hasItems = true;
             }
         }
-
-        if (hasItems && total > 0) {
-            tg.MainButton.setParams({
-                text: `ОФОРМИТЬ ЗАКАЗ — ${total} ₽`,
-                is_visible: true,
-                is_active: true,
-                color: tg.themeParams.button_color || '#248b91'
-            });
+        if (hasItems) {
+            tg.MainButton.setParams({ text: `ОФОРМИТЬ: ${total} ₽`, is_visible: true });
         } else {
             tg.MainButton.hide();
         }
@@ -264,7 +271,6 @@
 
     function onConfirm() {
         tg.MainButton.showProgress();
-
         const order = [];
         let finalTotal = 0;
 
@@ -272,39 +278,30 @@
             const count = cart[id];
             const item = menuItems.find(i => String(i.id) === String(id));
             if (item && count > 0) {
-                finalTotal += item.price * count;
+                const card = document.getElementById(`card-${id}`);
+                const addons = Array.from(card.querySelectorAll('.addon-cb:checked')).map(cb => cb.dataset.name);
+                const comment = document.getElementById(`comment-${id}`).value;
+                
+                let priceWithAddons = item.price;
+                card.querySelectorAll('.addon-cb:checked').forEach(cb => priceWithAddons += parseInt(cb.dataset.price));
+                
+                finalTotal += priceWithAddons * count;
                 order.push({
-                    title: item.title,
-                    count: count,
-                    price: item.price
+                    Название: item.title,
+                    Кол_во: count,
+                    Цена_за_ед: priceWithAddons,
+                    Добавки: addons.join(', ') || 'нет',
+                    Комментарий: comment || 'нет'
                 });
             }
         }
 
-        if (order.length === 0) {
-            tg.MainButton.hideProgress();
-            return;
-        }
-
-        // Данные для отправки боту
-        const payload = JSON.stringify({
-            order: order,
-            totalPrice: finalTotal,
-            time: "🚀 Как можно скорее" // Вшитое значение времени
-        });
-
-        tg.sendData(payload);
-        
-        setTimeout(() => {
-            tg.close();
-        }, 200);
+        tg.sendData(JSON.stringify({ заказ: order, итого: finalTotal, время: "🚀 Как можно скорее" }));
+        setTimeout(() => tg.close(), 200);
     }
 
     tg.onEvent('mainButtonClicked', onConfirm);
-    
-    // Запускаем рендер
     render();
 </script>
-
 </body>
 </html>
