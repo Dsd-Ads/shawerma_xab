@@ -6,14 +6,13 @@
     <title>Шаурма Хаб — Меню</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* Стили из Крафт Хаба (index.html) */
         :root {
             --bg-color: var(--tg-theme-bg-color, #ffffff);
             --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
             --text-color: var(--tg-theme-text-color, #000000);
             --hint-color: var(--tg-theme-hint-color, #999999);
             --link-color: var(--tg-theme-link-color, #248bed);
-            --button-color: var(--tg-theme-button-color, #248b91); /* Цвет кнопки немного адаптировал под тил (как было в шаурме), или можно вернуть #248bed */
+            --button-color: var(--tg-theme-button-color, #248b91); /* Цвет в стиле Шаурма Хаб */
             --button-text: var(--tg-theme-button-text-color, #ffffff);
         }
 
@@ -49,21 +48,14 @@
         }
         .nav-btn.active { background-color: var(--button-color); color: var(--button-text); }
 
-        .section-anchor { scroll-margin-top: 110px; }
+        .section-anchor { scroll-margin-top: 100px; }
 
         .category-header {
             padding: 20px 16px 8px; font-size: 14px; font-weight: 600;
             color: var(--hint-color); text-transform: uppercase; letter-spacing: 0.5px;
         }
 
-        .options-block {
-            background-color: var(--secondary-bg); margin: 12px;
-            padding: 12px; border-radius: 12px;
-        }
-        .options-block select {
-            width: 100%; background: none; border: none;
-            color: var(--link-color); font-size: 16px; outline: none;
-        }
+        /* Блок выбора времени удален из стилей, так как он больше не нужен */
 
         .item-card {
             display: flex; padding: 12px 16px; gap: 12px;
@@ -108,14 +100,6 @@
 <header>Шаурма Хаб</header>
 <div class="nav-tabs" id="nav-tabs"></div>
 
-<div class="options-block">
-    <div style="font-size: 12px; color: var(--hint-color); margin-bottom: 4px;">ВРЕМЯ ПОДАЧИ</div>
-    <select id="order-time">
-        <option value="🍽 К бронированию">К моему бронированию</option>
-        <option value="🚀 Как можно скорее">Как можно скорее</option>
-    </select>
-</div>
-
 <div id="menu-list"></div>
 <div class="bottom-space"></div>
 
@@ -125,7 +109,7 @@
     tg.expand();
     tg.MainButton.hide();
 
-    // Категории из Шаурма Хаб
+    // 1. Категории
     const categories = {
         'shawarma': '🌯 Шаурма',
         'sandwiches': '🥪 Сэндвичи',
@@ -135,8 +119,7 @@
         'bbq': '🔥 Мангал & Супы'
     };
 
-    // Товары из Шаурма Хаб, переведенные в формат Крафт Хаб
-    // image: '' оставлено пустым, будут серые квадраты. Сюда можно вставить ссылки.
+    // 2. Все товары (данные из вашего старого файла перенесены сюда)
     const menuItems = [
         // Шаурма
         { id: "sh_kur_st", category: "shawarma", title: "Шаурма курица (Стандарт)", price: 290, desc: "390г. Овощи, соусы, корейская морковь", image: "" },
@@ -154,4 +137,174 @@
         
         // Бургеры
         { id: "br_tiftik", category: "burgers", title: "Тифтик бургер", price: 570, desc: "280г. Рваная говядина, моцарелла", image: "" },
-        { id: "br_black", category: "burgers", title
+        { id: "br_black", category: "burgers", title: "Бургер Блэк", price: 460, desc: "315г. Котлета свино-говяжья, сыр", image: "" },
+        { id: "br_ananas", category: "burgers", title: "Бургер Ананас", price: 520, desc: "380г. Котлета говяжья, ананас", image: "" },
+        { id: "br_chkalov", category: "burgers", title: "Бургер Чкаловский", price: 540, desc: "400г. Курица, сыр, карри", image: "" },
+        
+        // Хот-доги
+        { id: "hd_cl", category: "hotdogs", title: "Хот-дог классик", price: 320, desc: "185г. Сосиска, сыр, овощи, соусы", image: "" },
+        { id: "hd_fr", category: "hotdogs", title: "Френч-дог курица", price: 270, desc: "150г. Лук сушеный, соусы", image: "" },
+        { id: "hd_corn", category: "hotdogs", title: "Корн-дог", price: 370, desc: "100г. Сосиска в тесте, сыр", image: "" },
+        
+        // Закуски
+        { id: "z_fri", category: "snacks", title: "Картофель фри", price: 130, desc: "100г. Классический фри", image: "" },
+        { id: "z_dolki", category: "snacks", title: "Картофельные дольки", price: 160, desc: "130г. Со специями", image: "" },
+        { id: "z_nag", category: "snacks", title: "Наггетсы (6 шт)", price: 190, desc: "Куриное филе в панировке", image: "" },
+        { id: "z_balls", category: "snacks", title: "Сырные шарики (6 шт)", price: 230, desc: "Тягучий сыр внутри", image: "" },
+        { id: "z_shamp", category: "snacks", title: "Шампиньоны панко", price: 220, desc: "6 шт. Хрустящие грибы", image: "" },
+        
+        // Мангал и Супы
+        { id: "m_sh_sv", category: "bbq", title: "Шашлык свинина", price: 490, desc: "250/80г.", image: "" },
+        { id: "m_lulya", category: "bbq", title: "Люля куриные", price: 260, desc: "125/70г.", image: "" },
+        { id: "s_grib", category: "bbq", title: "Суп-пюре грибной", price: 350, desc: "210г.", image: "" },
+        { id: "s_kur", category: "bbq", title: "Лапша куриная", price: 210, desc: "290г.", image: "" }
+    ];
+
+    let cart = {};
+
+    function render() {
+        const nav = document.getElementById('nav-tabs');
+        const list = document.getElementById('menu-list');
+        nav.innerHTML = '';
+        list.innerHTML = '';
+        
+        // Создаем навигацию и списки
+        Object.entries(categories).forEach(([catId, catName]) => {
+            // Кнопка навигации
+            nav.innerHTML += `<a href="#cat-${catId}" class="nav-btn" onclick="highlightNav(this)">${catName}</a>`;
+            
+            // Заголовок категории
+            list.innerHTML += `<div id="cat-${catId}" class="section-anchor"><div class="category-header">${catName}</div></div>`;
+            
+            // Товары категории
+            const items = menuItems.filter(i => i.category === catId);
+            
+            items.forEach(item => {
+                // Если картинки нет, фон будет серым
+                const imgStyle = item.image ? `style="background-image: url('${item.image}')"` : '';
+                
+                list.innerHTML += `
+                    <div class="item-card">
+                        <div class="item-img" ${imgStyle}></div>
+                        <div class="item-info">
+                            <div class="item-title">${item.title}</div>
+                            <div class="item-desc">${item.desc || ''}</div>
+                        </div>
+                        <div class="item-controls">
+                            <div class="price">${item.price} ₽</div>
+                            <button class="add-btn" id="add-${item.id}" onclick="updateCart('${item.id}', 1)">Добавить</button>
+                            <div class="counter" id="cnt-${item.id}">
+                                <button onclick="updateCart('${item.id}', -1)">−</button>
+                                <span class="count-num" id="num-${item.id}">0</span>
+                                <button onclick="updateCart('${item.id}', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        });
+
+        // Активируем первую кнопку
+        if (document.querySelector('.nav-btn')) {
+            document.querySelector('.nav-btn').classList.add('active');
+        }
+    }
+
+    function highlightNav(el) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        tg.HapticFeedback.impactOccurred('light');
+    }
+
+    function updateCart(id, delta) {
+        const itemId = String(id);
+        cart[itemId] = (cart[itemId] || 0) + delta;
+
+        const addBtn = document.getElementById(`add-${itemId}`);
+        const counter = document.getElementById(`cnt-${itemId}`);
+        const num = document.getElementById(`num-${itemId}`);
+
+        if (cart[itemId] > 0) {
+            if (addBtn) addBtn.style.display = 'none';
+            if (counter) counter.style.display = 'flex';
+            if (num) num.innerText = cart[itemId];
+        } else {
+            delete cart[itemId];
+            if (addBtn) addBtn.style.display = 'block';
+            if (counter) counter.style.display = 'none';
+        }
+        
+        tg.HapticFeedback.selectionChanged();
+        updateMainBtn(); 
+    }
+
+    function updateMainBtn() {
+        let total = 0;
+        let hasItems = false;
+
+        for (const id in cart) {
+            const count = cart[id];
+            const item = menuItems.find(i => String(i.id) === String(id));
+            if (item && count > 0) {
+                total += item.price * count;
+                hasItems = true;
+            }
+        }
+
+        if (hasItems && total > 0) {
+            tg.MainButton.setParams({
+                text: `ОФОРМИТЬ ЗАКАЗ — ${total} ₽`,
+                is_visible: true,
+                is_active: true,
+                color: tg.themeParams.button_color || '#248b91'
+            });
+        } else {
+            tg.MainButton.hide();
+        }
+    }
+
+    function onConfirm() {
+        tg.MainButton.showProgress();
+
+        const order = [];
+        let finalTotal = 0;
+
+        for (const id in cart) {
+            const count = cart[id];
+            const item = menuItems.find(i => String(i.id) === String(id));
+            if (item && count > 0) {
+                finalTotal += item.price * count;
+                order.push({
+                    title: item.title,
+                    count: count,
+                    price: item.price
+                });
+            }
+        }
+
+        if (order.length === 0) {
+            tg.MainButton.hideProgress();
+            return;
+        }
+
+        // Данные для отправки боту
+        const payload = JSON.stringify({
+            order: order,
+            totalPrice: finalTotal,
+            time: "🚀 Как можно скорее" // Вшитое значение времени
+        });
+
+        tg.sendData(payload);
+        
+        setTimeout(() => {
+            tg.close();
+        }, 200);
+    }
+
+    tg.onEvent('mainButtonClicked', onConfirm);
+    
+    // Запускаем рендер
+    render();
+</script>
+
+</body>
+</html>
