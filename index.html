@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Шаурма Хаб — Полное Меню</title>
+    <title>Шаурма Хаб</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -16,152 +16,120 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0; padding: 0;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        header {
-            background-color: var(--bg-color);
-            position: sticky; top: 0; z-index: 100;
-            padding: 12px; text-align: center; font-weight: 800;
-            border-bottom: 0.5px solid rgba(0,0,0,0.1);
         }
 
         .category-header {
-            padding: 20px 16px 8px; font-size: 14px; font-weight: 700;
-            color: var(--button-color); text-transform: uppercase; letter-spacing: 1px;
+            padding: 20px 16px 8px; font-size: 13px; font-weight: 800;
+            color: var(--button-color); text-transform: uppercase;
         }
 
         .item-card {
             background: var(--bg-color);
-            border-bottom: 0.5px solid rgba(0,0,0,0.05);
-            padding: 16px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 12px 16px;
         }
 
-        .item-main { display: flex; justify-content: space-between; align-items: flex-start; }
+        .item-main { display: flex; gap: 12px; align-items: center; }
+
+        /* СТИЛЬ ДЛЯ ФОТО */
+        .item-img {
+            width: 70px; height: 70px; border-radius: 12px;
+            background-color: var(--secondary-bg);
+            background-size: cover; background-position: center;
+            flex-shrink: 0;
+        }
+
         .item-info { flex: 1; }
-        .item-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-        .item-desc { font-size: 13px; color: var(--hint-color); line-height: 1.2; }
-        
-        .price-row { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 10px; }
-        .price { font-weight: 700; font-size: 16px; }
+        .item-title { font-size: 15px; font-weight: 600; }
+        .item-desc { font-size: 12px; color: var(--hint-color); margin-top: 2px; }
 
-        /* Кнопки и счетчик */
+        .price-row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+        .price { font-weight: 800; font-size: 15px; }
+
         .add-btn {
-            background-color: var(--secondary-bg); color: var(--button-color); border: none;
-            padding: 6px 16px; border-radius: 12px; font-weight: 700; cursor: pointer;
+            background-color: var(--button-color); color: var(--button-text); border: none;
+            padding: 6px 14px; border-radius: 10px; font-weight: 600;
         }
+
         .counter {
             display: none; align-items: center; background-color: var(--button-color);
-            color: var(--button-text); border-radius: 12px; padding: 2px;
+            color: var(--button-text); border-radius: 10px; padding: 2px;
         }
-        .counter button {
-            background: none; border: none; color: white; width: 32px; height: 32px; font-size: 20px; font-weight: bold;
-        }
-        .count-num { width: 24px; text-align: center; font-weight: 700; }
+        .counter button { background: none; border: none; color: white; width: 30px; height: 30px; font-size: 18px; }
+        .count-num { width: 20px; text-align: center; font-weight: 700; }
 
-        /* НАСЛОЕНИЕ (ДОБАВКИ И КОМБО-ВЫБОР) */
         .addon-section {
-            display: none; margin-top: 15px; padding: 12px;
+            display: none; margin-top: 12px; padding: 12px;
             background-color: var(--secondary-bg); border-radius: 12px;
         }
 
-        .combo-select-wrapper { margin-bottom: 12px; }
-        .combo-label { font-size: 11px; font-weight: 800; color: var(--hint-color); text-transform: uppercase; margin-bottom: 4px; display: block; }
         .combo-select {
-            width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);
-            background: var(--bg-color); color: var(--text-color); font-size: 14px;
+            width: 100%; padding: 8px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);
+            background: var(--bg-color); color: var(--text-color); margin-bottom: 8px;
         }
 
-        .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .addon-item {
-            display: flex; align-items: center; font-size: 13px;
-            background: var(--bg-color); padding: 8px; border-radius: 8px;
-        }
-        .addon-item input { margin-right: 8px; width: 16px; height: 16px; }
+        .addon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .addon-item { display: flex; align-items: center; font-size: 12px; }
+        .addon-item input { margin-right: 6px; }
 
         textarea {
-            width: 100%; margin-top: 10px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);
-            padding: 10px; font-family: inherit; font-size: 13px; background: var(--bg-color);
-            color: var(--text-color); box-sizing: border-box; resize: none;
+            width: 100%; margin-top: 8px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1);
+            padding: 8px; font-size: 12px; background: var(--bg-color); color: var(--text-color);
+            box-sizing: border-box; resize: none;
         }
 
-        .bottom-space { height: 100px; }
+        .bottom-space { height: 80px; }
     </style>
 </head>
 <body>
 
-<header>ШАУРМА ХАБ</header>
 <div id="menu-list"></div>
 <div class="bottom-space"></div>
 
 <script>
     const tg = window.Telegram.WebApp;
     tg.ready();
-    tg.expand();
 
-    const listDrinks = ["Кола 0.5", "Морс", "Вода", "Чай"];
-    const listSauces = ["Сырный", "Чесночный", "Аджика", "Кетчуп"];
+    const listDrinks = ["Кола 0.5", "Морс", "Чай"];
+    const listSauces = ["Сырный", "Чесночный", "Аджика"];
 
+    // ДАННЫЕ С ФОТО (Замените URL на свои реальные ссылки)
     const menuData = [
         {
-            category: "🎁 Выгодные Комбо",
+            category: "🎁 Комбо",
             items: [
-                { id: "c1", name: "Комбо 1", price: 450, desc: "Хот-дог, фри, соус и напиток", opts: [{l: "Напиток", d: listDrinks}, {l: "Соус", d: listSauces}] },
-                { id: "c2", name: "Комбо 2", price: 550, desc: "Блэк бургер, хашбраун и напиток", opts: [{l: "Напиток", d: listDrinks}] },
-                { id: "c3", name: "Комбо 3", price: 580, desc: "Гриббургер, фри, соус и напиток", opts: [{l: "Напиток", d: listDrinks}, {l: "Соус", d: listSauces}] },
-                { id: "c4", name: "Комбо 4", price: 620, desc: "Суп лапша, салат Цезарь, хашбраун и напиток", opts: [{l: "Напиток", d: listDrinks}] },
-                { id: "c5", name: "Комбо 5", price: 560, desc: "Фишбургер, фри, соус и напиток", opts: [{l: "Напиток", d: listDrinks}, {l: "Соус", d: listSauces}] },
-                { id: "c6", name: "Комбо 6", price: 690, desc: "Тифтик бургер, хашбраун и напиток", opts: [{l: "Напиток", d: listDrinks}] }
+                { id: "c1", name: "Комбо 1", price: 450, desc: "Хот-дог, фри, соус, напиток", img: "https://cdn-icons-png.flaticon.com/512/737/737602.png", opts: [{l: "Напиток", d: listDrinks}, {l: "Соус", d: listSauces}] },
+                { id: "c2", name: "Комбо 2", price: 550, desc: "Блэк бургер, хашбраун, напиток", img: "https://cdn-icons-png.flaticon.com/512/877/877951.png", opts: [{l: "Напиток", d: listDrinks}] }
             ]
         },
         {
             category: "🌯 Шаурма",
             items: [
-                { id: "sh_kur_st", name: "Шаурма курица (Стандарт)", price: 290, desc: "390г. Овощи, соусы" },
-                { id: "sh_svin_st", name: "Шаурма свинина (Стандарт)", price: 320, desc: "390г. Мясо на углях" },
-                { id: "sh_hab", name: "🌟 Шаурма ХАБ", price: 390, desc: "Овощи гриль, аджика, соус фета" }
-            ]
-        },
-        {
-            category: "🥪 Сэндвичи & Тортилья",
-            items: [
-                { id: "burrito", name: "Буррито", price: 450, desc: "Курица, фасоль, халапеньо" },
-                { id: "tort_krev", name: "Тортилья креветки", price: 370, desc: "Креветки панко, томат" }
-            ]
-        },
-        {
-            category: "🍔 Бургеры",
-            items: [
-                { id: "br_black", name: "Бургер Блэк", price: 460, desc: "Черная булка, котлета говяжья" },
-                { id: "br_tiftik", name: "Тифтик бургер", price: 570, desc: "Рваная говядина" }
+                { id: "sh_kur", name: "Шаурма курица (Ст)", price: 290, desc: "390г. Овощи, соусы", img: "https://cdn-icons-png.flaticon.com/512/575/575454.png" }
             ]
         }
     ];
 
-    const addons = [{ n: "🧀 Сыр", p: 40 }, { n: "🔥 Халапеньо", p: 30 }, { n: "🍟 Картофель", p: 30 }];
+    const addons = [{ n: "🧀 Сыр", p: 40 }, { n: "🔥 Халапеньо", p: 30 }];
     let cart = {};
 
     function render() {
         const list = document.getElementById('menu-list');
         menuData.forEach(cat => {
-            const catTitle = document.createElement('div');
-            catTitle.className = 'category-header';
-            catTitle.innerText = cat.category;
-            list.appendChild(catTitle);
+            const h = document.createElement('div');
+            h.className = 'category-header'; h.innerText = cat.category;
+            list.appendChild(h);
 
             cat.items.forEach(item => {
                 const optsHTML = item.opts ? item.opts.map(o => `
-                    <div class="combo-select-wrapper">
-                        <label class="combo-label">${o.l}</label>
-                        <select class="combo-select" onchange="recalc()">
-                            ${o.d.map(v => `<option value="${v}">${v}</option>`).join('')}
-                        </select>
-                    </div>
+                    <label style="font-size:10px; font-weight:bold; color:gray;">${o.l.toUpperCase()}</label>
+                    <select class="combo-select" onchange="recalc()">
+                        ${o.d.map(v => `<option value="${v}">${v}</option>`).join('')}
+                    </select>
                 `).join('') : '';
 
                 const div = document.createElement('div');
@@ -169,18 +137,19 @@
                 div.id = `item-${item.id}`;
                 div.innerHTML = `
                     <div class="item-main">
+                        <div class="item-img" style="background-image: url('${item.img}')"></div>
                         <div class="item-info">
                             <div class="item-title">${item.name}</div>
                             <div class="item-desc">${item.desc}</div>
-                        </div>
-                        <div class="price">${item.price} ₽</div>
-                    </div>
-                    <div class="price-row">
-                        <button class="add-btn" id="add-${item.id}" onclick="changeQty('${item.id}', 1, ${item.price})">Добавить</button>
-                        <div class="counter" id="cnt-${item.id}">
-                            <button onclick="changeQty('${item.id}', -1, ${item.price})">−</button>
-                            <span class="count-num" id="q-${item.id}">0</span>
-                            <button onclick="changeQty('${item.id}', 1, ${item.price})">+</button>
+                            <div class="price-row">
+                                <div class="price">${item.price} ₽</div>
+                                <button class="add-btn" id="add-${item.id}" onclick="changeQty('${item.id}', 1, ${item.price})">В корзину</button>
+                                <div class="counter" id="cnt-${item.id}">
+                                    <button onclick="changeQty('${item.id}', -1, ${item.price})">−</button>
+                                    <span class="count-num" id="q-${item.id}">0</span>
+                                    <button onclick="changeQty('${item.id}', 1, ${item.price})">+</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="addon-section" id="a-${item.id}">
@@ -188,11 +157,11 @@
                         <div class="addon-grid">
                             ${addons.map((a, i) => `
                                 <div class="addon-item">
-                                    <input type="checkbox" class="cb" id="cb-${item.id}-${i}" data-p="${a.p}" data-n="${a.n}" onchange="recalc()">
-                                    <label for="cb-${item.id}-${i}">${a.n} (+${a.p}₽)</label>
+                                    <input type="checkbox" class="cb" data-p="${a.p}" data-n="${a.n}" onchange="recalc()">
+                                    <span>${a.n} (+${a.p}₽)</span>
                                 </div>`).join('')}
                         </div>
-                        <textarea id="c-${item.id}" placeholder="Комментарий к блюду..." oninput="recalc()"></textarea>
+                        <textarea id="c-${item.id}" placeholder="Комментарий..." oninput="recalc()"></textarea>
                     </div>
                 `;
                 list.appendChild(div);
@@ -216,39 +185,45 @@
 
     window.recalc = function() {
         let total = 0;
-        let orderArr = [];
+        let orderList = [];
 
         for (const id in cart) {
             const card = document.getElementById(`item-${id}`);
-            let itemPrice = cart[id].p;
-            let details = [];
+            let finalPrice = cart[id].p;
+            let subDetails = [];
 
-            // Собираем выпадающие списки (Комбо)
-            card.querySelectorAll('.combo-select').forEach(sel => details.push(sel.value));
-            // Собираем добавки
+            card.querySelectorAll('.combo-select').forEach(s => subDetails.push(s.value));
             card.querySelectorAll('.cb:checked').forEach(c => {
-                itemPrice += parseInt(c.dataset.p);
-                details.push(c.dataset.n);
+                finalPrice += parseInt(c.dataset.p);
+                subDetails.push(c.dataset.n);
             });
 
-            total += itemPrice * cart[id].q;
-            orderArr.push({
-                item: card.querySelector('.item-title').innerText,
-                quantity: cart[id].q,
-                price: itemPrice,
-                details: details.join(', '),
-                comment: document.getElementById(`c-${id}`).value || "нет"
+            const comment = document.getElementById(`c-${id}`).value;
+
+            total += finalPrice * cart[id].q;
+            
+            // Формируем понятную строку для бота
+            orderList.push({
+                "название": card.querySelector('.item-title').innerText,
+                "кол_во": cart[id].q,
+                "цена": finalPrice,
+                "выбор": subDetails.join(', ') || "стандарт",
+                "коммент": comment || "-"
             });
         }
 
-        tg.MainButton.setText(`ОФОРМИТЬ: ${total} ₽`);
-        total > 0 ? tg.MainButton.show() : tg.MainButton.hide();
+        if (total > 0) {
+            tg.MainButton.setParams({ text: `ОФОРМИТЬ: ${total} ₽`, is_visible: true });
+        } else {
+            tg.MainButton.hide();
+        }
 
         tg.MainButton.offClick(sendOrder);
         tg.MainButton.onClick(sendOrder);
 
         function sendOrder() {
-            tg.sendData(JSON.stringify(orderArr));
+            // Отправляем JSON-строку. Бот должен уметь её принять.
+            tg.sendData(JSON.stringify({ "заказ": orderList, "итого": total }));
         }
     };
 
