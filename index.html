@@ -89,7 +89,7 @@
         .addon-item input { margin-right: 8px; width: 16px; height: 16px; accent-color: var(--button-color); }
         
         .comment-label {
-            font-size: 12px; color: var(--hint-color); margin-bottom: 6px; display: block;
+            font-size: 12px; color: var(--hint-color); margin-bottom: 4px; display: block;
             text-transform: uppercase; font-weight: 600; margin-top: 8px;
         }
 
@@ -98,7 +98,7 @@
             padding: 8px; font-size: 14px; background: var(--bg-color);
             color: var(--text-color); box-sizing: border-box; outline: none; font-family: inherit;
         }
-        select { margin-bottom: 10px; appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; background-size: 16px; }
+        select { margin-bottom: 10px; }
 
         .bottom-space { height: 100px; }
     </style>
@@ -112,7 +112,8 @@
 
 <script>
     const tg = window.Telegram.WebApp;
-    tg.ready(); tg.expand();
+    tg.ready();
+    tg.expand();
 
     const categories = {
         'combo': '🍱 Комбо',
@@ -127,19 +128,18 @@
             category: "combo", 
             title: "Комбо №1 (Хот-дог + Фри)", 
             price: 490, 
-            desc: "Классический хот-дог, порция фри, напиток и соус на выбор", 
-            image: "",
+            desc: "Хот-дог, фри, напиток и соус", 
             selects: [
-                { id: "drink", label: "🥤 Выберите напиток", options: ["Кола", "Сок яблоко", "Айран", "Вода"] },
-                { id: "sauce", label: "🍯 Выберите соус", options: ["Чесночный", "Сырный", "Острый", "Кетчуп"] }
+                { id: "drink", label: "🥤 Напиток", options: ["Кола", "Сок", "Айран", "Вода"] },
+                { id: "sauce", label: "🍯 Соус", options: ["Чесночный", "Сырный", "Острый"] }
             ]
         },
-        { id: "sh_kur_st", category: "shawarma", title: "Шаурма курица (Стандарт)", price: 290, desc: "390г. Овощи, соусы, корейская морковь", image: "" },
-        { id: "hd_cl", category: "hotdogs", title: "Хот-дог классик", price: 320, desc: "185г. Сосиска, сыр, овощи, соусы", image: "" },
-        { id: "z_fri", category: "snacks", title: "Картофель фри", price: 130, desc: "100г.", image: "" }
+        { id: "sh_kur_st", category: "shawarma", title: "Шаурма курица", price: 290, desc: "390г. Овощи, соусы" },
+        { id: "hd_cl", category: "hotdogs", title: "Хот-дог классик", price: 320, desc: "185г. Сосиска, сыр" },
+        { id: "z_fri", category: "snacks", title: "Картофель фри", price: 130, desc: "100г." }
     ];
 
-    const addonsList = [{ n: "🧀 Сыр", p: 40 }, { n: "🔥 Халапеньо", p: 30 }, { n: "🍟 Картофель", p: 30 }, { n: "🥒 Огурчик", p: 20 }];
+    const addonsList = [{ n: "🧀 Сыр", p: 40 }, { n: "🔥 Халапеньо", p: 30 }];
 
     let cart = {};
 
@@ -153,30 +153,27 @@
             list.innerHTML += `<div id="cat-${catId}" class="section-anchor"><div class="category-header">${catName}</div></div>`;
             
             menuItems.filter(i => i.category === catId).forEach(item => {
-                const imgStyle = item.image ? `style="background-image: url('${item.image}')"` : '';
                 const addonsHTML = addonsList.map((a, idx) => `
                     <div class="addon-item">
                         <input type="checkbox" class="addon-cb" id="cb-${item.id}-${idx}" data-price="${a.p}" data-name="${a.n}" onchange="updateMainBtn()">
                         <label for="cb-${item.id}-${idx}">${a.n} (+${a.p}₽)</label>
                     </div>`).join('');
 
-                // Генерация селектов для комбо
                 let selectsHTML = '';
                 if (item.selects) {
                     item.selects.forEach(sel => {
                         selectsHTML += `
                             <span class="comment-label">${sel.label}</span>
-                            <select class="item-select" data-id="${sel.id}">
+                            <select class="item-select" data-label="${sel.label}">
                                 ${sel.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
-                            </select>
-                        `;
+                            </select>`;
                     });
                 }
 
                 list.innerHTML += `
                     <div class="item-card-wrapper" id="card-${item.id}">
                         <div class="item-main">
-                            <div class="item-img" ${imgStyle}></div>
+                            <div class="item-img"></div>
                             <div class="item-info">
                                 <div class="item-title">${item.title}</div>
                                 <div class="item-desc">${item.desc || ''}</div>
@@ -194,93 +191,88 @@
                         <div class="addon-section" id="addons-${item.id}">
                             ${selectsHTML}
                             <div class="addon-grid">${addonsHTML}</div>
-                            <span class="comment-label">Комментарий к блюду:</span>
+                            <span class="comment-label">Комментарий:</span>
                             <textarea id="comment-${item.id}" placeholder="Ваши пожелания..." rows="2"></textarea>
                         </div>
                     </div>`;
             });
         });
-        if (document.querySelector('.nav-btn')) document.querySelector('.nav-btn').classList.add('active');
-    }
-
-    function highlightNav(el) {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        tg.HapticFeedback.impactOccurred('light');
     }
 
     function updateCart(id, delta) {
         cart[id] = (cart[id] || 0) + delta;
-        const addBtn = document.getElementById(`add-${id}`);
-        const counter = document.getElementById(`cnt-${id}`);
-        const num = document.getElementById(`num-${id}`);
-        const addonsBlock = document.getElementById(`addons-${id}`);
-
-        if (cart[id] > 0) {
-            addBtn.style.display = 'none'; counter.style.display = 'flex';
-            num.innerText = cart[id]; addonsBlock.style.display = 'block';
-        } else {
-            delete cart[id];
-            addBtn.style.display = 'block'; counter.style.display = 'none';
-            addonsBlock.style.display = 'none';
-        }
+        if (cart[id] <= 0) delete cart[id];
+        
+        document.getElementById(`add-${id}`).style.display = cart[id] ? 'none' : 'block';
+        document.getElementById(`cnt-${id}`).style.display = cart[id] ? 'flex' : 'none';
+        document.getElementById(`addons-${id}`).style.display = cart[id] ? 'block' : 'none';
+        if (cart[id]) document.getElementById(`num-${id}`).innerText = cart[id];
+        
         tg.HapticFeedback.selectionChanged();
         updateMainBtn(); 
     }
 
     function updateMainBtn() {
-        let total = 0; let hasItems = false;
+        let total = 0;
         for (const id in cart) {
-            const count = cart[id];
             const item = menuItems.find(i => String(i.id) === String(id));
-            if (item && count > 0) {
-                let itemTotal = item.price;
-                const card = document.getElementById(`card-${id}`);
-                card.querySelectorAll('.addon-cb:checked').forEach(cb => itemTotal += parseInt(cb.dataset.price));
-                total += itemTotal * count;
-                hasItems = true;
-            }
+            let price = item.price;
+            document.querySelectorAll(`#card-${id} .addon-cb:checked`).forEach(cb => price += parseInt(cb.dataset.price));
+            total += price * cart[id];
         }
-        if (hasItems) {
-            tg.MainButton.setParams({ text: `ОФОРМИТЬ: ${total} ₽`, is_visible: true });
-        } else { tg.MainButton.hide(); }
+
+        if (total > 0) {
+            tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ: ${total} ₽`);
+            tg.MainButton.show();
+        } else {
+            tg.MainButton.hide();
+        }
     }
 
-    function onConfirm() {
-        tg.MainButton.showProgress();
-        const order = []; let finalTotal = 0;
+    // ВАЖНО: Очистка старых событий перед назначением нового
+    tg.onEvent('mainButtonClicked', function() {
+        try {
+            const orderData = [];
+            let totalSum = 0;
 
-        for (const id in cart) {
-            const count = cart[id];
-            const item = menuItems.find(i => String(i.id) === String(id));
-            if (item && count > 0) {
+            for (const id in cart) {
+                const item = menuItems.find(i => String(i.id) === String(id));
                 const card = document.getElementById(`card-${id}`);
+                
                 const addons = Array.from(card.querySelectorAll('.addon-cb:checked')).map(cb => cb.dataset.name);
+                const choices = Array.from(card.querySelectorAll('.item-select')).map(s => `${s.dataset.label}: ${s.value}`);
                 const comment = document.getElementById(`comment-${id}`).value;
+
+                let finalItemPrice = item.price;
+                card.querySelectorAll('.addon-cb:checked').forEach(cb => finalItemPrice += parseInt(cb.dataset.price));
                 
-                // Сбор выбранных опций (напиток, соус)
-                const selectedOptions = Array.from(card.querySelectorAll('.item-select')).map(s => `${s.previousElementSibling.innerText.replace(':', '')}: ${s.value}`);
-                
-                let priceWithAddons = item.price;
-                card.querySelectorAll('.addon-cb:checked').forEach(cb => priceWithAddons += parseInt(cb.dataset.price));
-                
-                finalTotal += priceWithAddons * count;
-                order.push({
-                    Название: item.title,
-                    Кол_во: count,
-                    Цена_ед: priceWithAddons,
-                    Выбор: selectedOptions.join(' | ') || 'нет',
-                    Добавки: addons.join(', ') || 'нет',
-                    Комментарий: comment || 'нет'
+                totalSum += finalItemPrice * cart[id];
+
+                orderData.push({
+                    item: item.title,
+                    count: cart[id],
+                    options: choices.join(', '),
+                    addons: addons.join(', '),
+                    comment: comment
                 });
             }
-        }
 
-        tg.sendData(JSON.stringify({ заказ: order, итого: finalTotal, время: "🚀 Как можно скорее" }));
-        setTimeout(() => tg.close(), 200);
+            if (orderData.length > 0) {
+                tg.sendData(JSON.stringify({
+                    items: orderData,
+                    total: totalSum
+                }));
+            }
+        } catch (e) {
+            alert("Ошибка: " + e.message);
+        }
+    });
+
+    function highlightNav(el) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
     }
 
-    tg.onEvent('mainButtonClicked', onConfirm);
     render();
 </script>
 </body>
