@@ -99,9 +99,9 @@
     tg.expand();
 
     const modDB = {
-        sauces: { title: "Выберите соус", items: [{ id: "s1", title: "Сырный соус", price: 0 }, { id: "s2", title: "Чесночный соус", price: 0 }, { id: "s3", title: "Барбекю", price: 0 }] },
+        sauces: { title: "Выберите соус", items: [{ id: "s1", title: "1000 остравов", price: 0 }, { id: "s2", title: "Барбекю", price: 0 }, { id: "s3", title: "Горчичный", price: 0 },{ id: "s4", title: "Сырный", price: 0 }, { id: "s5", title: "Томатный кетчуп", price: 0 }, { id: "s6", title: "Чесночный", price: 0 }] },
         drinks: { title: "Выберите напиток", items: [{ id: "d1", title: "Кола 0.33", price: 0 }, { id: "d2", title: "Сок 0.2", price: 0 }, { id: "d3", title: "Вода 0.5", price: 0 }] },
-        sh_extra: { title: "Добавки", items: [{ id: "e1", title: "Сыр", price: 40 }, { id: "e2", title: "Халапеньо", price: 30 }] }
+        sh_extra: { title: "Добавки", items: [{ id: "e1", title: "Картофель ", price: 30 }, { id: "e2", title: "Кукуруза ", price: 20 },{ id: "e3", title: "Маслины", price: 40 }, { id: "e4", title: "Огурец маринованый", price: 20 }, {id: "e5",title: "Огурец", price: 20 }, { id: "e6", title: "Томат", price: 20 }, { id: "e7", title:"Сыр", price: 40 },{ id: "e8", title: "Халапеньо", price: 30 }] }
     };
 
     const menu = [
@@ -163,11 +163,11 @@
         items: [
             {
                 id: "c1",
-                title: "Комбо без соуса",
+                title: "Комбо 1",
                 price: 500,
                 desc: "Шаурма и напиток на выбор",
                 img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["drinks"] // <-- Здесь только напитки, соусов не будет
+                requiredMods: ["drinks", "sauces"] // <-- Здесь только напитки, соусов не будет
             }
         ]
     },
@@ -501,7 +501,7 @@
                 requiredMods: ["sh_extra"] 
             },
             { 
-                id: "za4", 
+                id: "sa4", 
                 title: "Сельдь под шубой", 
                 price: 290, 
                 desc: "230г. Сельдь, яйцо, картофель, морковь, свекла, лук репчатый, майонез", 
@@ -574,7 +574,7 @@
                 img: "https://placehold.co/200x200?text=Shaurma"
             },
             {
-                id: "ma3",
+                id: "ma4",
                 title: "",
                 price: 520,
                 desc: "250/80",
@@ -704,14 +704,21 @@
     }
 
     tg.onEvent('mainButtonClicked', () => {
-        const payload = {
-            items: cart,
-            total: cart.reduce((sum, i) => sum + i.totalPrice, 0),
-            time: document.getElementById('order-time').value,
-            comment: document.getElementById('order-comment').value
-        };
-        tg.sendData(JSON.stringify(payload));
-    });
+    if (cart.length === 0) {
+        tg.showAlert('Добавьте хотя бы одно блюдо в заказ');
+        return;
+    }
+
+    const payload = {
+        items: cart,
+        total: cart.reduce((sum, i) => sum + i.totalPrice, 0),
+        time: document.getElementById('order-time').value,
+        comment: document.getElementById('order-comment').value
+    };
+
+    tg.sendData(JSON.stringify(payload));
+});
+
 
     renderMenu();
 </script>
