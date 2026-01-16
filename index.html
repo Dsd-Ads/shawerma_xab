@@ -679,19 +679,41 @@
     function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
 
     function confirmAdd() {
-        const selectedMods = [];
-        let extraPrice = 0;
-        document.querySelectorAll('#modifiers-content input:checked').forEach(input => {
-            selectedMods.push(input.dataset.title);
-            extraPrice += parseInt(input.dataset.price);
-        });
+    const selectedMods = [];
+    let extraPrice = 0;
 
-        cart.push({ title: currentItem.title, mods: selectedMods, totalPrice: currentItem.price + extraPrice });
-        tg.HapticFeedback.impactOccurred('medium');
-        closeModal();
-        updateMainButton();
-        updateBadges(); // Вызываем обновление бейджей
+    // Проверяем обязательные группы
+    if (currentItem.requiredMods) {
+        for (const modKey of currentItem.requiredMods) {
+            const checked = document.querySelectorAll(
+                `#modifiers-content input[name="${modKey}"]:checked`
+            );
+
+            if (checked.length === 0) {
+                tg.showAlert(`Пожалуйста, выберите: ${modDB[modKey].title}`);
+                return; // ❌ НЕ добавляем в корзину
+            }
+        }
     }
+
+    // Если все обязательные выбраны — собираем данные
+    document.querySelectorAll('#modifiers-content input:checked').forEach(input => {
+        selectedMods.push(input.dataset.title);
+        extraPrice += parseInt(input.dataset.price || 0);
+    });
+
+    cart.push({
+        title: currentItem.title,
+        mods: selectedMods,
+        totalPrice: currentItem.price + extraPrice
+    });
+
+    tg.HapticFeedback.impactOccurred('medium');
+    closeModal();
+    updateMainButton();
+    updateBadges();
+}
+
 
     function updateMainButton() {
         const total = cart.reduce((sum, i) => sum + i.totalPrice, 0);
