@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Шаурма Хаб — Меню</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --bg-color: var(--tg-theme-bg-color, #ffffff);
-            --secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
-            --text-color: var(--tg-theme-text-color, #000000);
-            --hint-color: var(--tg-theme-hint-color, #999999);
-            --button-color: var(--tg-theme-button-color, #248bed);
-            --button-text: var(--tg-theme-button-text-color, #ffffff);
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Шаурма Хаб — Меню</title>
+	<script src="https://telegram.org/js/telegram-web-app.js"></script>
+	<style>
+		:root {
+			--bg-color: var(--tg-theme-bg-color, #ffffff);
+			--secondary-bg: var(--tg-theme-secondary-bg-color, #f4f4f5);
+			--text-color: var(--tg-theme-text-color, #000000);
+			--hint-color: var(--tg-theme-hint-color, #999999);
+			--button-color: var(--tg-theme-button-color, #248bed);
+			--button-text: var(--tg-theme-button-text-color, #ffffff);
+		}
 
-        body { font-family: -apple-system, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; }
-        
-        header { position: sticky; top: 0; background: var(--bg-color); z-index: 10; padding: 10px; border-bottom: 0.5px solid #eee; text-align: center; font-weight: bold; }
-        
-        .nav-tabs { display: flex; overflow-x: auto; padding: 10px; gap: 8px; position: sticky; top: 41px; background: var(--bg-color); z-index: 9; border-bottom: 0.5px solid #eee; }
-        .nav-tabs::-webkit-scrollbar { display: none; }
-        .nav-btn { padding: 6px 15px; background: var(--secondary-bg); border-radius: 15px; font-size: 13px; white-space: nowrap; border: none; color: inherit; }
-        .nav-btn.active { background: var(--button-color); color: var(--button-text); }
+		body { font-family: -apple-system, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; }
+		
+		header { position: sticky; top: 0; background: var(--bg-color); z-index: 10; padding: 10px; border-bottom: 0.5px solid #eee; text-align: center; font-weight: bold; }
+		
+		.nav-tabs { display: flex; overflow-x: auto; padding: 10px; gap: 8px; position: sticky; top: 41px; background: var(--bg-color); z-index: 9; border-bottom: 0.5px solid #eee; }
+		.nav-tabs::-webkit-scrollbar { display: none; }
+		.nav-btn { padding: 6px 15px; background: var(--secondary-bg); border-radius: 15px; font-size: 13px; white-space: nowrap; border: none; color: inherit; }
+		.nav-btn.active { background: var(--button-color); color: var(--button-text); }
 
-        .order-settings { background: var(--secondary-bg); margin: 12px; padding: 12px; border-radius: 12px; }
-        .setting-item { margin-bottom: 10px; }
-        .label { font-size: 11px; color: var(--hint-color); text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
-        select, textarea { 
-            width: 100%; background: var(--bg-color); border: 0.5px solid rgba(0,0,0,0.1); 
-            border-radius: 8px; padding: 8px; font-size: 14px; color: var(--text-color); outline: none; box-sizing: border-box;
-        }
-        textarea { resize: none; height: 60px; font-family: inherit; }
+		.order-settings { background: var(--secondary-bg); margin: 12px; padding: 12px; border-radius: 12px; }
+		.setting-item { margin-bottom: 10px; }
+		.label { font-size: 11px; color: var(--hint-color); text-transform: uppercase; margin-bottom: 4px; font-weight: 600; }
+		select, textarea { 
+			width: 100%; background: var(--bg-color); border: 0.5px solid rgba(0,0,0,0.1); 
+			border-radius: 8px; padding: 8px; font-size: 14px; color: var(--text-color); outline: none; box-sizing: border-box;
+		}
+		textarea { resize: none; height: 60px; font-family: inherit; }
 
-        .item-card { display: flex; padding: 15px; border-bottom: 0.5px solid #f0f0f0; gap: 12px; align-items: center; position: relative; }
-        .img-wrapper { position: relative; flex-shrink: 0; }
-        .item-img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; background: #f5f5f5; }
-        
-        /* Стиль счетчика на фото */
-        .badge {
-            position: absolute; top: -5px; right: -5px;
-            background: #e64d44; color: white;
-            font-size: 12px; font-weight: bold;
-            min-width: 20px; height: 20px;
-            border-radius: 10px; display: none;
-            align-items: center; justify-content: center;
-            border: 2px solid var(--bg-color);
-        }
+		.item-card { display: flex; padding: 15px; border-bottom: 0.5px solid #f0f0f0; gap: 12px; align-items: center; position: relative; }
+		.img-wrapper { position: relative; flex-shrink: 0; }
+		.item-img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; background: #f5f5f5; }
+		
+		/* Стиль счетчика на фото */
+		.badge {
+			position: absolute; top: -5px; right: -5px;
+			background: #e64d44; color: white;
+			font-size: 12px; font-weight: bold;
+			min-width: 20px; height: 20px;
+			border-radius: 10px; display: none;
+			align-items: center; justify-content: center;
+			border: 2px solid var(--bg-color);
+		}
 
-        .item-info { flex: 1; }
-        .item-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
-        .item-desc { font-size: 12px; color: var(--hint-color); line-height: 1.2; }
-        .item-price { font-weight: 700; color: var(--text-color); margin-top: 8px; }
+		.item-info { flex: 1; }
+		.item-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+		.item-desc { font-size: 12px; color: var(--hint-color); line-height: 1.2; }
+		.item-price { font-weight: 700; color: var(--text-color); margin-top: 8px; }
 
-        .add-btn { background: var(--button-color); color: var(--button-text); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; }
+		.add-btn { background: var(--button-color); color: var(--button-text); border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; }
 
-        #modal-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: flex-end; }
-        #modal { background: var(--bg-color); width: 100%; border-radius: 20px 20px 0 0; padding: 20px; box-sizing: border-box; max-height: 85vh; overflow-y: auto; }
-        .mod-section-title { font-size: 13px; font-weight: bold; color: var(--hint-color); margin: 15px 0 8px; text-transform: uppercase; }
-        .modifier-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; align-items: center; }
-        .modifier-item input { width: 22px; height: 22px; accent-color: var(--button-color); }
-        .category-title { padding: 15px 15px 5px; font-weight: bold; color: var(--hint-color); text-transform: uppercase; font-size: 12px; }
-        .bottom-space { height: 120px; }
-    </style>
+		#modal-overlay { display: none; position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: flex-end; }
+		#modal { background: var(--bg-color); width: 100%; border-radius: 20px 20px 0 0; padding: 20px; box-sizing: border-box; max-height: 85vh; overflow-y: auto; }
+		.mod-section-title { font-size: 13px; font-weight: bold; color: var(--hint-color); margin: 15px 0 8px; text-transform: uppercase; }
+		.modifier-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; align-items: center; }
+		.modifier-item input { width: 22px; height: 22px; accent-color: var(--button-color); }
+		.category-title { padding: 15px 15px 5px; font-weight: bold; color: var(--hint-color); text-transform: uppercase; font-size: 12px; }
+		.bottom-space { height: 120px; }
+	</style>
 </head>
 <body>
 
@@ -70,679 +70,795 @@
 <div class="nav-tabs" id="nav-tabs"></div>
 
 <div class="order-settings">
-    <div class="setting-item">
-        <div class="label">Время подачи</div>
-        <select id="order-time">
-            <option value="🚀 Как можно скорее">Как можно скорее</option>
-        </select>
-    </div>
-    <div class="setting-item">
-        <div class="label">Комментарий к заказу</div>
-        <textarea id="order-comment" placeholder="Например: без лука, соус отдельно..."></textarea>
-    </div>
+	<div class="setting-item">
+		<div class="label">Время подачи</div>
+		<select id="order-time">
+			<option value="🚀 Как можно скорее">Как можно скорее</option>
+		</select>
+	</div>
+	<div class="setting-item">
+		<div class="label">Комментарий к заказу</div>
+		<textarea id="order-comment" placeholder="Например: без лука, соус отдельно..."></textarea>
+	</div>
 </div>
 
 <div id="menu-container"></div>
 <div class="bottom-space"></div>
 
 <div id="modal-overlay">
-    <div id="modal">
-        <h3 id="modal-title" style="margin-top:0">Настройка блюда</h3>
-        <div id="modifiers-content"></div>
-        <button class="add-btn" style="width: 100%; margin-top: 20px; padding: 16px;" onclick="confirmAdd()">Добавить в заказ</button>
-        <button onclick="closeModal()" style="width: 100%; background: none; border: none; padding: 15px; color: var(--hint-color);">Закрыть</button>
-    </div>
+	<div id="modal">
+		<h3 id="modal-title" style="margin-top:0">Настройка блюда</h3>
+		<div id="modifiers-content"></div>
+		<button class="add-btn" style="width: 100%; margin-top: 20px; padding: 16px;" onclick="confirmAdd()">Добавить в заказ</button>
+		<button onclick="closeModal()" style="width: 100%; background: none; border: none; padding: 15px; color: var(--hint-color);">Закрыть</button>
+	</div>
 </div>
 
 <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+	const tg = window.Telegram.WebApp;
+	tg.expand();
 
-    const modDB = {
-        sauces: { title: "Выберите соус", items: [{ id: "s1", title: "1000 остравов", price: 0 }, { id: "s2", title: "Барбекю", price: 0 }, { id: "s3", title: "Горчичный", price: 0 },{ id: "s4", title: "Сырный", price: 0 }, { id: "s5", title: "Томатный кетчуп", price: 0 }, { id: "s6", title: "Чесночный", price: 0 }, { id: "s7", title: "Без соуса", price: 0 }] },
-        drinks: { title: "Выберите напиток", items: [{ id: "d1", title: "Кола 0.33", price: 0 }, { id: "d2", title: "Сок 0.2", price: 0 }, { id: "d3", title: "Вода 0.5", price: 0 }, { id: "d4", title: "Без напитка", price: 0 }] },
-        sh_extra: { title: "Добавки", items: [{ id: "e1", title: "Картофель ", price: 30 }, { id: "e2", title: "Кукуруза ", price: 20 },{ id: "e3", title: "Маслины", price: 40 }, { id: "e4", title: "Огурец маринованый", price: 20 }, {id: "e5",title: "Огурец", price: 20 }, { id: "e6", title: "Томат", price: 20 }, { id: "e7", title:"Сыр", price: 40 },{ id: "e8", title: "Халапеньо", price: 30 }, { id: "e9", title: "Без добавки", price: 0 }] }
-    };
+	const modDB = {
+  sauces: {
+    title: "Выберите соус",
+    items: [
+      { id: "s1", title: "1000 островов", price: 0 },
+      { id: "s2", title: "Барбекю", price: 0 },
+      { id: "s3", title: "Горчичный", price: 0 },
+      { id: "s4", title: "Сырный", price: 0 },
+      { id: "s5", title: "Томатный кетчуп", price: 0 },
+      { id: "s6", title: "Чесночный", price: 0 },
+      { id: "s7", title: "Без соуса", price: 0 }
+    ]
+  },
 
-    const menu = [
-    { 
-        cat: "Шаурма", 
-        items: [
-            { 
-                id: "sh1", 
-                title: "Шаурма курица стандартная", 
-                price: 320, 
-                desc: "390г. Курица, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            }, // <-- Ставим запятую, чтобы добавить следующее блюдо
-            { 
-                id: "sh2", // Сделали id уникальным (sh2)
-                title: "Шаурма курица большая", 
-                price: 390, 
-                desc: "500г. Курица, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
-                img: "https://placehold.co/200x200?text=Big+Shaurma", 
-                requiredMods: ["sh_extra"] 
-            }, // После последнего блюда в категории запятая не обязательна
-            { 
-                id: "sh3", 
-                title: "Шаурма свиная стандартная", 
-                price: 350, 
-                desc: "390г. Свинина, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "sh4", 
-                title: "Шаурма свиная большая", 
-                price: 420, 
-                desc: "500г. Свинина, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "sh5", 
-                title: "Шаурма скумбрия", 
-                price: 420, 
-                desc: "355г. Салат, скумбрия гриль, огурец, помидор, лук красный, соус белый, теряки", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "sh6", 
-                title: "Шаурма ХАБ", 
-                price: 430, 
-                desc: "330г. Курица, овощи на мангале(баклажан, перец болгарский, помидор), лук красный маринованый, фирменный соус хаб, аджика", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-        ] 
-    }, // <-- Ставим запятую перед следующей категорией
-    {
-        cat: "Комбо",
-        items: [
-            {
-                id: "c1",
-                title: "Комбо 1",
-                price: 500,
-                desc: "Шаурма и напиток на выбор",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["drinks", "sauces"] // <-- Здесь только напитки, соусов не будет
-            }
-        ]
-    },
-    {
-        cat: "Фаст-Фуд",
-        items: [
-            {
-                id: "f1",
-                title: "Фахитос курица",
-                price: 410,
-                desc: "340г. Курица, белый соус, маслины, кукуруза ",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f2",
-                title: "Фахитос курица лаваш",
-                price: 410,
-                desc: "340г. Курица, белый соус, маслины, кукуруза",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f3",
-                title: "Фахитос свиная",
-                price: 440,
-                desc: "340г. Свинина, белый соус, маслины, кукуруза ",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f4",
-                title: "Фахитос свиная лаваш",
-                price: 440,
-                desc: "340г .Свинина, белый соус, маслины, кукуруза",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f5",
-                title: "Гиро курица",
-                price: 390,
-                desc: "370г. Курица, белый соус, помидор, картофель фри ",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f6",
-                title: "Гиро свинина",
-                price: 340,
-                desc: "370г. Курица, белый соус, маслины, кукуруза",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f7",
-                title: "Чиабатта моцарелла",
-                price: 450,
-                desc: "220г. Микс салата, помидор, моцарелла, песто, бальзамик ",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f8",
-                title: "Чиабатта курица",
-                price: 370,
-                desc: "180г. Микс салата, помидор, курица с вертила, соус карри",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f9",
-                title: "Сэндвич индейка",
-                price: 290,
-                desc: "242г. Пшеничный хлеб с начинкой из ветчины индейки, томата, огурца, салата айсберга и пикантной заправкой",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f10",
-                title: "Сэндвич курица",
-                price: 290,
-                desc: "245г. Пшеничный хлеб с начинкой из копченой курицы, томата, огурца, салата айсберга и заправкой Цезарь",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f11",
-                title: "Сэндвич лосось",
-                price: 420,
-                desc: "200г. Пшеничный хлеб с начинкой из слабосоленого лосося, томата, огурца, салата айсберга и сыром кремчиз",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f12",
-                title: "Тортилья креветки",
-                price: 390,
-                desc: "150г. Пшеничная лепешка с начинкой из креветки, томата, салата айсберга и соуса васаби",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f13",
-                title: "Буррито",
-                price: 480,
-                desc: "300г. Курица, перец болгарский, фасоль,лук красный, халапеньо,соус ореховый",
-                img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08415.jpg?mt=1759706467000",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f14",
-                title: "Хот-дог классик",
-                price: 360,
-                desc: "185г. Пшеничная булочка, сосиска куриная, горчица, лук красный, огурец маринованный, лист салата, томатный кетчуп, майонез, сырный соус",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f15",
-                title: "Френч-дог",
-                price: 290,
-                desc: "150г. Сосиска жареная на гриле в пшеничной булочке с маринованными огурцами, томатным, горчичным соусами и сушеным луком",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f16",
-                title: "Корн-дог",
-                price: 410,
-                desc: "100г. Сосиска в тесте с сыром, горчичным соусом и томатным кетчупом",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f17",
-                title: "Чикен гриббургер",
-                price: 390,
-                desc: "235г. Пшеничная булочка, Куриная котлета собственного производстава жаренная на гриле, листом салата, огурцами, помидором, сырным соусом и майонезом  ",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f18",
-                title: "Тифтик бургер (рваная говядина)",
-                price: 620,
-                desc: "280г. Пшеничная булочка, рваная говядина, лист салата, маринованый огурец, соус гриль",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f19",
-                title: "Бургер блэк",
-                price: 490,
-                desc: "415г.Черная булочка, свино-говьяжя котлета собственого производска, лист салата, огурец, помидор, лук красный, соус майонез-чили",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f20",
-                title: "Шеф Бургер говядина",
-                price: 520,
-                desc: "333г. Пшеничная булочка с котлетой из мяса говядины, с сыром чеддер, маринованным огурцом, томатом, красным луком, айсбергом, сушеным луком, соусом бургер",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f21",
-                title: "Бургер ананас",
-                price: 520,
-                desc: "380г.  ",
-                img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08388.jpg?mt=1759705123000",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f22",
-                title: "Бургер Чкаловский",
-                price: 570,
-                desc: "400г. Пшеничная булочка, куриная котлета в хрустящей панировке, сыр, салат айсберг, томаты, соус карри, майонез",
-                img: "img/ch.jpg",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f23",
-                title: "Фиш бургер",
-                price: 370,
-                desc: "205г. Пшеничная булочка, лист салата, маринованые огурец, филе минтая в хрустящей панировке, сыр, соус тар-тар ",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f24",
-                title: "Картофель фри",
-                price: 150,
-                desc: "100г. Картофель жареный во фритюре с солью",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            },
-            {
-                id: "f25",
-                title: "Картофельные дольки",
-                price: 180,
-                desc: "130г. Картофельные дольки жареные во фритюре с чесночным маслом и зеленью",
-                img: "https://placehold.co/200x200?text=Combo",
-                requiredMods: ["sh_extra"]
-            }
-        ]
-    },
-    { 
-        cat: "Завтраки", 
-        items: [
-            { 
-                id: "z1", 
-                title: "Завтрак №1", 
-                price: 410, 
-                desc: "329г. Пшеничная булочка поджареная на гриле, 2 яйца жареные, фасоль в томате, салат(огурец, помидор, соус цезарь), куриная сосиска поджареная на гриле", 
-                img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08491.jpg?mt=1759708596000", 
-                requiredMods: ["sh_extra"] 
-            }, // <-- Ставим запятую, чтобы добавить следующее блюдо
-            { 
-                id: "z2", 
-                title: "Завтрак №2", 
-                price: 410, 
-                desc: "286г. Пшеничная булочка поджареная на гриле, 2 яйца жареные, фасоль в томате, салат(огурец, помидор, соус цезарь), бекон", 
-                img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08494.jpg?mt=1759708624000", 
-                requiredMods: ["sh_extra"] 
-            }, // После последнего блюда в категории запятая не обязательна
-            { 
-                id: "z3", 
-                title: "Оладьи", 
-                price: 90, 
-                desc: "75г.", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "z4", 
-                title: "Пирожок ХАБ", 
-                price: 120, 
-                desc: "1шт. ", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "z5", 
-                title: "Сырники", 
-                price: 240, 
-                desc: "140г. ", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-        ] 
-    }, // <-- Ставим запятую перед следующей категорией
-    { 
-        cat: "Закуски", 
-        items: [
-            { 
-                id: "za1", 
-                title: "Куриные крылья", 
-                price: 420, 
-                desc: "180г ", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            }, // <-- Ставим запятую, чтобы добавить следующее блюдо
-            { 
-                id: "za2", // Сделали id уникальным (sh2)
-                title: "Наггетсы", 
-                price: 190, 
-                desc: "6шт", 
-                img: "https://placehold.co/200x200?text=Big+Shaurma", 
-                requiredMods: ["sh_extra"] 
-            }, // После последнего блюда в категории запятая не обязательна
-            { 
-                id: "za3", 
-                title: "Сырные шарики", 
-                price: 260, 
-                desc: "6шт", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "za4", 
-                title: "Креветка в кляре", 
-                price: 390, 
-                desc: "5шт.", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "za5", 
-                title: "Шампиньены в панко", 
-                price: 240, 
-                desc: "6шт. ", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "za6", 
-                title: "Хашбраун", 
-                price: 100, 
-                desc: "60г. ", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-        ] 
-    },
-    { 
-        cat: "Салаты", 
-        items: [
-            { 
-                id: "sa1", 
-                title: "Греческий", 
-                price: 370, 
-                desc: "210г. Салат из овощей : томата, огурца, болгарского перца, маслин, сыра фета и заправки на основе оливкового масла ", 
-                img: "https://placehold.co/200x200?text=Shaurma",  
-            }, // <-- Ставим запятую, чтобы добавить следующее блюдо
-            { 
-                id: "sa2", // Сделали id уникальным (sh2)
-                title: "Цезарь копченая курица", 
-                price: 390, 
-                desc: "180г. Салат микс, томаты, гренки, пармезан, курица копченая и заправка Цезарь", 
-                img: "https://placehold.co/200x200?text=Big+Shaurma", 
-            
-            }, // После последнего блюда в категории запятая не обязательна
-            { 
-                id: "sa3", 
-                title: "Оливье", 
-                price: 290, 
-                desc: "210г. Ветчина из индейки, яйцо, картофель, морковь, зеленый горошек, огурец маринованный, зелень, майонез", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            },
-            { 
-                id: "sa4", 
-                title: "Сельдь под шубой", 
-                price: 290, 
-                desc: "230г. Сельдь, яйцо, картофель, морковь, свекла, лук репчатый, майонез", 
-                img: "https://placehold.co/200x200?text=Shaurma", 
-                requiredMods: ["sh_extra"] 
-            }
-        ] 
-    },
-    {
-        cat: 'Боулы',
-        items:[
-            {
-                id: "b1",
-                title: "Боул Лосось",
-                price: 560,
-                desc: "300г. ",
-                img: "https://placehold.co/200x200?text=Shaurma"
-            },
-            {
-                id: "b2",
-                title: "Боул курица",
-                price: 360,
-                desc: "320г. ",
-                img: "https://placehold.co/200x200?text=Shaurma"
+  drinks: {
+    title: "Выберите напиток",
+    items: [
+      { id: "d1", title: "Аква Минерале без газа 0.5 л", price: 0 },
+      { id: "d2", title: "Аква Минерале газ 0.5 л", price: 0 },
+      { id: "d3", title: "Кола Эвервесс 0.33 л", price: 0 },
+      { id: "d4", title: "Кола Эвервесс без сахара 0.5 л", price: 0 },
+      { id: "d5", title: "Lipton зелёный чай 0.5 л", price: 0 },
+      { id: "d6", title: "Lipton лимон 0.5 л", price: 0 },
+      { id: "d7", title: "Lipton малина 0.5 л", price: 0 },
+      { id: "d8", title: "Lipton манго 0.5 л", price: 0 },
+      { id: "d9", title: "Lipton персик 0.5 л", price: 0 },
+      { id: "d10", title: "Сок микс 0.2 л", price: 0 },
+      { id: "d11", title: "Тоник Эвервесс лимон 0.33 л", price: 0 },
+      { id: "d12", title: "Тоник Эвервесс 0.33 л", price: 0 },
+      { id: "d13", title: "FruStyle апельсин 0.33 л", price: 0 },
+      { id: "d14", title: "FruStyle лимон/лайм 0.33 л", price: 0 }
+    ]
+  },
 
-            }
-        ]
-    },
-    {
-        cat: 'Супы',
-        items:[
-            {
-                id: "sup1",
-                title: "Суп-пюре грибной",
-                price: 370,
-                desc: "290г.",
-                img: "https://placehold.co/200x200?text=Shaurma"
-            },
-            {
-                id: "sup2",
-                title: "Лапша куриная",
-                price: 230,
-                desc: "290г.",
-                img: "https://placehold.co/200x200?text=Shaurma"
-            }
-        ]
-    },
-    {
-        cat: "Мангал",
-        items:[
-            {
-                id: "ma1",
-                title: "",
-                price: 290,
-                desc: "125/70",
-                img: "https://placehold.co/200x200?text=Shaurma"
-            },
-            {
-                id: "ma2",
-                title: "",
-                price: 310,
-                desc: "125/70",
-                img: "https://placehold.co/200x200?text=Shaurma"
-            },
-            {
-                id: "ma3",
-                title: "",
-                price: 480,
-                desc: "250/80",
-                img: "https://placehold.co/200x200?text=Shaurma"
-            },
-            {
-                id: "ma4",
-                title: "",
-                price: 520,
-                desc: "250/80",
-                img: "https://placehold.co/200x200?text=Shaurma",
-            },
-            {
-                id: "ma5",
-                title: "",
-                price: 180,
-                desc: "5",
-                img: "https://placehold.co/200x200?text=Shaurma"
-            }
-        ]
-    } // <-- Ставим запятую перед следующей категорией
+  sh_extra: {
+    title: "Добавки",
+    items: [
+      { id: "e1", title: "Картофель", price: 30 },
+      { id: "e2", title: "Кукуруза", price: 20 },
+      { id: "e3", title: "Маслины", price: 40 },
+      { id: "e4", title: "Огурец маринованный", price: 20 },
+      { id: "e5", title: "Огурец свежий", price: 20 },
+      { id: "e6", title: "Томат", price: 20 },
+      { id: "e7", title: "Сыр", price: 40 },
+      { id: "e8", title: "Халапеньо", price: 30 },
+      { id: "e9", title: "Без добавок", price: 0 }
+    ]
+  }
+};
+
+
+	const menu = [
+	{ 
+		cat: "Шаурма", 
+		items: [
+			{ 
+				id: "sh1", 
+				title: "Шаурма курица стандартная", 
+				price: 320, 
+				desc: "390г. Курица, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			}, // <-- Ставим запятую, чтобы добавить следующее блюдо
+			{ 
+				id: "sh2", // Сделали id уникальным (sh2)
+				title: "Шаурма курица большая", 
+				price: 390, 
+				desc: "500г. Курица, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
+				img: "https://placehold.co/200x200?text=Big+Shaurma", 
+				requiredMods: ["sh_extra"] 
+			}, // После последнего блюда в категории запятая не обязательна
+			{ 
+				id: "sh3", 
+				title: "Шаурма свиная стандартная", 
+				price: 350, 
+				desc: "390г. Свинина, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "sh4", 
+				title: "Шаурма свиная большая", 
+				price: 420, 
+				desc: "500г. Свинина, капуста, морковь по-корейски, огурец, помидор, лук красный, соус белый, соус красный", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "sh5", 
+				title: "Шаурма скумбрия", 
+				price: 420, 
+				desc: "355г. Салат, скумбрия гриль, огурец, помидор, лук красный, соус белый, теряки", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "sh6", 
+				title: "Шаурма ХАБ", 
+				price: 430, 
+				desc: "330г. Курица, овощи на мангале(баклажан, перец болгарский, помидор), лук красный маринованый, фирменный соус хаб, аджика", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+		] 
+	}, // <-- Ставим запятую перед следующей категорией
+	{
+		cat: "Комбо",
+		items: [
+			{
+				id: "c1",
+				title: "Комбо 1",
+				price: 500,
+				desc: "Хот-дог, напиток, фри, соус",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["drinks", "sauces"]
+			},
+			{
+				id: "c2",
+				title: "Комбо 2",
+				price: 550,
+				desc: "Блэк бургер, хашбраун, напиток",
+				img: "",
+				requiredMods: ["drinks"]
+			},
+			{
+				id: "c3",
+				title: "Комбо 3",
+				price: 540,
+				desc: "Гриббургер, напиток, фри, соус",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["drinks", "sauces"]
+			},
+			{
+				id: "c4",
+				title: "Комбо 4",
+				price: 620,
+				desc: "Лапша куриная, салат цезарь, хашбраун, напиток",
+				img: "",
+				requiredMods: ["drinks"]
+			},
+			{
+				id: "c5",
+				title: "Комбо 5",
+				price: 520,
+				desc: "Фишбургер, напиток, фри, соус",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["drinks", "sauces"]
+			},
+			{
+				id: "c6",
+				title: "Комбо 6",
+				price: 640,
+				desc: "Тиф тик бургер, хашбраун, напиток",
+				img: "",
+				requiredMods: ["drinks"]
+			}
+		]
+	},
+	{
+		cat: "Фаст-Фуд",
+		items: [
+			{
+				id: "f1",
+				title: "Фахитос курица",
+				price: 410,
+				desc: "340г. Курица, белый соус, маслины, кукуруза ",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f2",
+				title: "Фахитос курица лаваш",
+				price: 410,
+				desc: "340г. Курица, белый соус, маслины, кукуруза",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f3",
+				title: "Фахитос свиная",
+				price: 440,
+				desc: "340г. Свинина, белый соус, маслины, кукуруза ",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f4",
+				title: "Фахитос свиная лаваш",
+				price: 440,
+				desc: "340г .Свинина, белый соус, маслины, кукуруза",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f5",
+				title: "Гиро курица",
+				price: 390,
+				desc: "370г. Курица, белый соус, помидор, картофель фри ",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f6",
+				title: "Гиро свинина",
+				price: 340,
+				desc: "370г. Курица, белый соус, маслины, кукуруза",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f7",
+				title: "Чиабатта моцарелла",
+				price: 450,
+				desc: "220г. Микс салата, помидор, моцарелла, песто, бальзамик ",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f8",
+				title: "Чиабатта курица",
+				price: 370,
+				desc: "180г. Микс салата, помидор, курица с вертила, соус карри",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f9",
+				title: "Сэндвич индейка",
+				price: 290,
+				desc: "242г. Пшеничный хлеб с начинкой из ветчины индейки, томата, огурца, салата айсберга и пикантной заправкой",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f10",
+				title: "Сэндвич курица",
+				price: 290,
+				desc: "245г. Пшеничный хлеб с начинкой из копченой курицы, томата, огурца, салата айсберга и заправкой Цезарь",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f11",
+				title: "Сэндвич лосось",
+				price: 420,
+				desc: "200г. Пшеничный хлеб с начинкой из слабосоленого лосося, томата, огурца, салата айсберга и сыром кремчиз",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f12",
+				title: "Тортилья креветки",
+				price: 390,
+				desc: "150г. Пшеничная лепешка с начинкой из креветки, томата, салата айсберга и соуса васаби",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f13",
+				title: "Буррито",
+				price: 480,
+				desc: "300г. Курица, перец болгарский, фасоль,лук красный, халапеньо,соус ореховый",
+				img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08415.jpg?mt=1759706467000",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f14",
+				title: "Хот-дог классик",
+				price: 360,
+				desc: "185г. Пшеничная булочка, сосиска куриная, горчица, лук красный, огурец маринованный, лист салата, томатный кетчуп, майонез, сырный соус",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f15",
+				title: "Френч-дог",
+				price: 290,
+				desc: "150г. Сосиска жареная на гриле в пшеничной булочке с маринованными огурцами, томатным, горчичным соусами и сушеным луком",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f16",
+				title: "Корн-дог",
+				price: 410,
+				desc: "100г. Сосиска в тесте с сыром, горчичным соусом и томатным кетчупом",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f17",
+				title: "Чикен гриббургер",
+				price: 390,
+				desc: "235г. Пшеничная булочка, Куриная котлета собственного производстава жаренная на гриле, листом салата, огурцами, помидором, сырным соусом и майонезом  ",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f18",
+				title: "Тифтик бургер (рваная говядина)",
+				price: 620,
+				desc: "280г. Пшеничная булочка, рваная говядина, лист салата, маринованый огурец, соус гриль",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f19",
+				title: "Бургер блэк",
+				price: 490,
+				desc: "415г.Черная булочка, свино-говьяжя котлета собственого производска, лист салата, огурец, помидор, лук красный, соус майонез-чили",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f20",
+				title: "Шеф Бургер говядина",
+				price: 520,
+				desc: "333г. Пшеничная булочка с котлетой из мяса говядины, с сыром чеддер, маринованным огурцом, томатом, красным луком, айсбергом, сушеным луком, соусом бургер",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f21",
+				title: "Бургер ананас",
+				price: 520,
+				desc: "380г.  ",
+				img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08388.jpg?mt=1759705123000",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f22",
+				title: "Бургер Чкаловский",
+				price: 570,
+				desc: "400г. Пшеничная булочка, куриная котлета в хрустящей панировке, сыр, салат айсберг, томаты, соус карри, майонез",
+				img: "img/ch.jpg",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f23",
+				title: "Фиш бургер",
+				price: 370,
+				desc: "205г. Пшеничная булочка, лист салата, маринованые огурец, филе минтая в хрустящей панировке, сыр, соус тар-тар ",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f24",
+				title: "Картофель фри",
+				price: 150,
+				desc: "100г. Картофель жареный во фритюре с солью",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			},
+			{
+				id: "f25",
+				title: "Картофельные дольки",
+				price: 180,
+				desc: "130г. Картофельные дольки жареные во фритюре с чесночным маслом и зеленью",
+				img: "https://placehold.co/200x200?text=Combo",
+				requiredMods: ["sh_extra"]
+			}
+		]
+	},
+	{ 
+		cat: "Завтраки", 
+		items: [
+			{ 
+				id: "z1", 
+				title: "Завтрак №1", 
+				price: 410, 
+				desc: "329г. Пшеничная булочка поджареная на гриле, 2 яйца жареные, фасоль в томате, салат(огурец, помидор, соус цезарь), куриная сосиска поджареная на гриле", 
+				img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08491.jpg?mt=1759708596000", 
+				requiredMods: ["sh_extra"] 
+			}, // <-- Ставим запятую, чтобы добавить следующее блюдо
+			{ 
+				id: "z2", 
+				title: "Завтрак №2", 
+				price: 410, 
+				desc: "286г. Пшеничная булочка поджареная на гриле, 2 яйца жареные, фасоль в томате, салат(огурец, помидор, соус цезарь), бекон", 
+				img: "https://thumb.cloud.mail.ru/weblink/thumb/xw1/hqdE/GsEHbT6fz/Kraft_HUB08494.jpg?mt=1759708624000", 
+				requiredMods: ["sh_extra"] 
+			}, // После последнего блюда в категории запятая не обязательна
+			{ 
+				id: "z3", 
+				title: "Оладьи", 
+				price: 90, 
+				desc: "75г.", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "z4", 
+				title: "Пирожок ХАБ", 
+				price: 120, 
+				desc: "1шт. ", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "z5", 
+				title: "Сырники", 
+				price: 240, 
+				desc: "140г. ", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+		] 
+	}, // <-- Ставим запятую перед следующей категорией
+	{ 
+		cat: "Закуски", 
+		items: [
+			{ 
+				id: "za1", 
+				title: "Куриные крылья", 
+				price: 420, 
+				desc: "180г ", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			}, // <-- Ставим запятую, чтобы добавить следующее блюдо
+			{ 
+				id: "za2", // Сделали id уникальным (sh2)
+				title: "Наггетсы", 
+				price: 190, 
+				desc: "6шт", 
+				img: "https://placehold.co/200x200?text=Big+Shaurma", 
+				requiredMods: ["sh_extra"] 
+			}, // После последнего блюда в категории запятая не обязательна
+			{ 
+				id: "za3", 
+				title: "Сырные шарики", 
+				price: 260, 
+				desc: "6шт", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "za4", 
+				title: "Креветка в кляре", 
+				price: 390, 
+				desc: "5шт.", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "za5", 
+				title: "Шампиньены в панко", 
+				price: 240, 
+				desc: "6шт. ", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "za6", 
+				title: "Хашбраун", 
+				price: 100, 
+				desc: "60г. ", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+		] 
+	},
+	{ 
+		cat: "Салаты", 
+		items: [
+			{ 
+				id: "sa1", 
+				title: "Греческий", 
+				price: 370, 
+				desc: "210г. Салат из овощей : томата, огурца, болгарского перца, маслин, сыра фета и заправки на основе оливкового масла ", 
+				img: "https://placehold.co/200x200?text=Shaurma",  
+			}, // <-- Ставим запятую, чтобы добавить следующее блюдо
+			{ 
+				id: "sa2", // Сделали id уникальным (sh2)
+				title: "Цезарь копченая курица", 
+				price: 390, 
+				desc: "180г. Салат микс, томаты, гренки, пармезан, курица копченая и заправка Цезарь", 
+				img: "https://placehold.co/200x200?text=Big+Shaurma", 
+			
+			}, // После последнего блюда в категории запятая не обязательна
+			{ 
+				id: "sa3", 
+				title: "Оливье", 
+				price: 290, 
+				desc: "210г. Ветчина из индейки, яйцо, картофель, морковь, зеленый горошек, огурец маринованный, зелень, майонез", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			},
+			{ 
+				id: "sa4", 
+				title: "Сельдь под шубой", 
+				price: 290, 
+				desc: "230г. Сельдь, яйцо, картофель, морковь, свекла, лук репчатый, майонез", 
+				img: "https://placehold.co/200x200?text=Shaurma", 
+				requiredMods: ["sh_extra"] 
+			}
+		] 
+	},
+	{
+		cat: 'Боулы',
+		items:[
+			{
+				id: "b1",
+				title: "Боул Лосось",
+				price: 560,
+				desc: "300г. ",
+				img: "https://placehold.co/200x200?text=Shaurma"
+			},
+			{
+				id: "b2",
+				title: "Боул курица",
+				price: 360,
+				desc: "320г. ",
+				img: "https://placehold.co/200x200?text=Shaurma"
+
+			}
+		]
+	},
+	{
+		cat: 'Супы',
+		items:[
+			{
+				id: "sup1",
+				title: "Суп-пюре грибной",
+				price: 370,
+				desc: "290г.",
+				img: "https://placehold.co/200x200?text=Shaurma"
+			},
+			{
+				id: "sup2",
+				title: "Лапша куриная",
+				price: 230,
+				desc: "290г.",
+				img: "https://placehold.co/200x200?text=Shaurma"
+			}
+		]
+	},
+	{
+		cat: "Мангал",
+		items:[
+			{
+				id: "ma1",
+				title: "",
+				price: 290,
+				desc: "125/70",
+				img: "https://placehold.co/200x200?text=Shaurma"
+			},
+			{
+				id: "ma2",
+				title: "",
+				price: 310,
+				desc: "125/70",
+				img: "https://placehold.co/200x200?text=Shaurma"
+			},
+			{
+				id: "ma3",
+				title: "",
+				price: 480,
+				desc: "250/80",
+				img: "https://placehold.co/200x200?text=Shaurma"
+			},
+			{
+				id: "ma4",
+				title: "",
+				price: 520,
+				desc: "250/80",
+				img: "https://placehold.co/200x200?text=Shaurma",
+			},
+			{
+				id: "ma5",
+				title: "",
+				price: 180,
+				desc: "5",
+				img: "https://placehold.co/200x200?text=Shaurma"
+			}
+		]
+	} // <-- Ставим запятую перед следующей категорией
 ];
 
-    let cart = [];
-    let currentItem = null;
+	let cart = [];
+	let currentItem = null;
 
-    function renderMenu() {
-        const container = document.getElementById('menu-container');
-        const nav = document.getElementById('nav-tabs');
-        
-        menu.forEach((section, idx) => {
-            const catId = `cat-${idx}`;
-            nav.innerHTML += `<button class="nav-btn ${idx===0?'active':''}" onclick="scrollToCat('${catId}', this)">${section.cat}</button>`;
-            container.innerHTML += `<div class="category-title" id="${catId}">${section.cat}</div>`;
-            
-            section.items.forEach(item => {
-                container.innerHTML += `
-                    <div class="item-card" data-title="${item.title}">
-                        <div class="img-wrapper">
-                            <img class="item-img" src="${item.img}">
-                            <div class="badge" id="badge-${item.id}">0</div>
-                        </div>
-                        <div class="item-info">
-                            <div class="item-title">${item.title}</div>
-                            <div class="item-desc">${item.desc}</div>
-                            <div class="item-price">${item.price} ₽</div>
-                        </div>
-                        <button class="add-btn" onclick="openModal('${item.id}')">＋</button>
-                    </div>
-                `;
-            });
-        });
-    }
+	function renderMenu() {
+		const container = document.getElementById('menu-container');
+		const nav = document.getElementById('nav-tabs');
+		
+		menu.forEach((section, idx) => {
+			const catId = `cat-${idx}`;
+			nav.innerHTML += `<button class="nav-btn ${idx===0?'active':''}" onclick="scrollToCat('${catId}', this)">${section.cat}</button>`;
+			container.innerHTML += `<div class="category-title" id="${catId}">${section.cat}</div>`;
+			
+			section.items.forEach(item => {
+				container.innerHTML += `
+					<div class="item-card" data-title="${item.title}">
+						<div class="img-wrapper">
+							<img class="item-img" src="${item.img}">
+							<div class="badge" id="badge-${item.id}">0</div>
+						</div>
+						<div class="item-info">
+							<div class="item-title">${item.title}</div>
+							<div class="item-desc">${item.desc}</div>
+							<div class="item-price">${item.price} ₽</div>
+						</div>
+						<button class="add-btn" onclick="openModal('${item.id}')">＋</button>
+					</div>
+				`;
+			});
+		});
+	}
 
-    function updateBadges() {
-        // Считаем количество каждого товара в корзине
-        const counts = {};
-        cart.forEach(item => {
-            counts[item.title] = (counts[item.title] || 0) + 1;
-        });
+	function updateBadges() {
+	const counts = {};
+	cart.forEach(item => {
+		counts[item.title] = (counts[item.title] || 0) + 1;
+	});
 
-        // Обновляем видимость бейджей
-        menu.forEach(section => {
-            section.items.forEach(item => {
-                const b = document.getElementById(`badge-${item.id}`);
-                const count = counts[item.title] || 0;
-                if (count > 0) {
-                    b.innerText = count;
-                    b.style.display = 'flex';
-                } else {
-                    b.style.display = 'none';
-                }
-            });
-        });
-    }
-
-    function scrollToCat(id, btn) {
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function openModal(itemId) {
-        let item;
-        menu.forEach(c => { const found = c.items.find(i => i.id === itemId); if(found) item = found; });
-        currentItem = JSON.parse(JSON.stringify(item));
-        const content = document.getElementById('modifiers-content');
-        content.innerHTML = '';
-        document.getElementById('modal-title').innerText = item.title;
-
-        if (item.requiredMods) {
-            item.requiredMods.forEach(modKey => {
-                const group = modDB[modKey];
-                content.innerHTML += `<div class="mod-section-title">${group.title}</div>`;
-                group.items.forEach(m => {
-                    const isRadio = (modKey === 'drinks' || modKey === 'sauces');
-                    content.innerHTML += `
-                        <label class="modifier-item">
-                            <span>${m.title} ${m.price > 0 ? '(+' + m.price + ' ₽)' : ''}</span>
-                            <input type="${isRadio ? 'radio' : 'checkbox'}" name="${modKey}" data-title="${m.title}" data-price="${m.price}">
-                        </label>
-                    `;
-                });
-            });
-        }
-        document.getElementById('modal-overlay').style.display = 'flex';
-    }
-
-    function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
-
-    function confirmAdd() {
-    const selectedMods = [];
-    let extraPrice = 0;
-
-    // Проверяем обязательные группы
-    if (currentItem.requiredMods) {
-        for (const modKey of currentItem.requiredMods) {
-            const checked = document.querySelectorAll(
-                `#modifiers-content input[name="${modKey}"]:checked`
-            );
-
-            if (checked.length === 0) {
-                tg.showAlert(`Пожалуйста, выберите: ${modDB[modKey].title}`);
-                return; // ❌ НЕ добавляем в корзину
-            }
-        }
-    }
-
-    // Если все обязательные выбраны — собираем данные
-    document.querySelectorAll('#modifiers-content input:checked').forEach(input => {
-        selectedMods.push(input.dataset.title);
-        extraPrice += parseInt(input.dataset.price || 0);
-    });
-
-    cart.push({
-        title: currentItem.title,
-        mods: selectedMods,
-        totalPrice: currentItem.price + extraPrice
-    });
-
-    tg.HapticFeedback.impactOccurred('medium');
-    closeModal();
-    updateMainButton();
-    updateBadges();
+	menu.forEach(section => {
+		section.items.forEach(item => {
+			const b = document.getElementById(`badge-${item.id}`);
+			const count = counts[item.title] || 0;
+			if (count > 0) {
+				b.innerText = count;
+				b.style.display = 'flex';
+			} else {
+				b.style.display = 'none';
+			}
+		});
+	});
 }
 
+function scrollToCat(id, btn) {
+	document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+	btn.classList.add('active');
+	document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
-    function updateMainButton() {
-        const total = cart.reduce((sum, i) => sum + i.totalPrice, 0);
-        if (total > 0) {
-            tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ: ${total} ₽`);
-            tg.MainButton.show();
-        } else {
-            tg.MainButton.hide();
-        }
-    }
+function openModal(itemId) {
+	let item;
+	menu.forEach(c => { const found = c.items.find(i => i.id === itemId); if(found) item = found; });
+	currentItem = JSON.parse(JSON.stringify(item));
+	const content = document.getElementById('modifiers-content');
+	content.innerHTML = '';
+	document.getElementById('modal-title').innerText = item.title;
 
-    tg.onEvent('mainButtonClicked', () => {
-    if (cart.length === 0) {
-        tg.showAlert('Добавьте хотя бы одно блюдо в заказ');
-        return;
-    }
+	if (item.requiredMods) {
+		item.requiredMods.forEach(modKey => {
+			const group = modDB[modKey];
+			content.innerHTML += `<div class="mod-section-title">${group.title}</div>`;
 
-    const payload = {
-        items: cart,
-        total: cart.reduce((sum, i) => sum + i.totalPrice, 0),
-        time: document.getElementById('order-time').value,
-        comment: document.getElementById('order-comment').value
-    };
+			// Чекбокс "Без добавок"
+			content.innerHTML += `
+				<label class="modifier-item">
+					<span>Без добавок</span>
+					<input type="checkbox" data-no-mods>
+				</label>
+			`;
 
-    tg.sendData(JSON.stringify(payload));
+			group.items.forEach(m => {
+				content.innerHTML += `
+					<div class="modifier-item modifier-counter" data-title="${m.title}" data-price="${m.price}">
+						<span>${m.title} ${m.price > 0 ? '(+' + m.price + ' ₽)' : ''}</span>
+						<div class="counter">
+							<button type="button" class="minus">−</button>
+							<span class="count">0</span>
+							<button type="button" class="plus">+</button>
+						</div>
+					</div>
+				`;
+			});
+		});
+	}
+	initModifierCounters();
+	document.getElementById('modal-overlay').style.display = 'flex';
+}
+
+function initModifierCounters() {
+	const noMods = document.querySelector('[data-no-mods]');
+	const mods = document.querySelectorAll('.modifier-counter');
+
+	noMods.addEventListener('change', () => {
+		mods.forEach(m => {
+			m.classList.toggle('disabled', noMods.checked);
+			m.querySelector('.count').innerText = '0';
+		});
+	});
+
+	mods.forEach(m => {
+		const minus = m.querySelector('.minus');
+		const plus = m.querySelector('.plus');
+		const count = m.querySelector('.count');
+
+		plus.onclick = () => { if (!noMods.checked) count.innerText = +count.innerText + 1; };
+		minus.onclick = () => { if (+count.innerText > 0) count.innerText--; };
+	});
+}
+
+function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
+
+function confirmAdd() {
+	const noMods = document.querySelector('[data-no-mods]')?.checked;
+	const modsMap = {};
+	let extraPrice = 0;
+
+	if (!noMods) {
+		document.querySelectorAll('.modifier-counter').forEach(m => {
+			const count = +m.querySelector('.count').innerText;
+			if (count > 0) {
+				modsMap[m.dataset.title] = count;
+				extraPrice += count * +m.dataset.price;
+			}
+		});
+
+		if (Object.keys(modsMap).length === 0) {
+			tg.showAlert('Выберите добавки или «Без добавок»');
+			return;
+		}
+	}
+
+	cart.push({
+		title: currentItem.title,
+		mods: modsMap, // {Сыр: 2, Бекон:1}
+		totalPrice: currentItem.price + extraPrice
+	});
+
+	tg.HapticFeedback.impactOccurred('medium');
+	closeModal();
+	updateMainButton();
+	updateBadges();
+}
+
+function updateMainButton() {
+	const total = cart.reduce((sum, i) => sum + i.totalPrice, 0);
+	if (total > 0) {
+		tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ: ${total} ₽`);
+		tg.MainButton.show();
+	} else {
+		tg.MainButton.hide();
+	}
+}
+
+tg.onEvent('mainButtonClicked', () => {
+	if (cart.length === 0) {
+		tg.showAlert('Добавьте хотя бы одно блюдо в заказ');
+		return;
+	}
+
+	const payload = {
+		items: cart.map(i => ({
+			title: i.title,
+			mods: Object.entries(i.mods).map(([k,v]) => `${k} ×${v}`),
+			price: i.totalPrice
+		})),
+		total: cart.reduce((sum, i) => sum + i.totalPrice, 0),
+		time: document.getElementById('order-time').value,
+		comment: document.getElementById('order-comment').value
+	};
+
+	tg.sendData(JSON.stringify(payload));
 });
 
+	renderMenu();
 
-    renderMenu();
 </script>
 </body>
 </html>
